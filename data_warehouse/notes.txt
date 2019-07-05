@@ -1,0 +1,61 @@
+##############################
+DW from business perspective
+##############################
+You are in charge of a retailer’s data infrastructure. Let’s look at some business activities.
+
+Customers should be able to find goods & make orders
+Inventory Staff should be able to stock, retrieve, and re-order goods
+Delivery Staff should be able to pick up & deliver goods
+HR should be able to assess the performance of sales staff
+Marketing should be able to see the effect of different sales channels
+Management should be able to monitor sales growth
+
+In a simple world this could potentially be performed in a relational database
+
+However in the real world things to consider are:
+Retailer has a nation-wide presence → Scale? A relational database can only grow vertically
+Acquired smaller retailers, brick & mortar shops, online store → Single database? Complexity? Now have many systems to integrate
+Has support call center & social media accounts → Tabular data? Will likely be messy non-relational data
+Customers, Inventory Staff and Delivery staff expect the system to be fast & stable → Performance
+HR, Marketing & Sales Reports want a lot information but have not decided yet on everything they need → Clear Requirements?
+
+##############################
+DW from technical perspective
+##############################
+data warehouse definitions
+copy of transaction data specifically structured for query and analysis
+
+subject-oriented = no one size fits all
+integrated = data from many sources
+nonvolatile = not transient, needs to be persisted
+time-variant collection of data = I can ask the same question from one day to the next and it is going to change
+
+retreives + consolidates data periodically = continuous data integration
+from source systems into dimensional or normalized data store
+keeps years of history + queried for business intelligence 
+typically updated in batches + not every time a transaction happens in the source system
+
+data in
+ETL
+extract data from the source system used for operations
+transform the data 
+load into a dimensional model
+
+dimensional model
+designed to make it easy for business users to work with the data
+improve analytical query performance
+technologies used for storing dimensional models are different than traditional technologies
+
+data out
+BI apps
+visuals/reportings
+
+data warehouse goals
+simple to understand
+performant
+quality assured 
+handle new questions well
+secure
+
+dimensional model
+

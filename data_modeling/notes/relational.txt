@@ -1,0 +1,57 @@
+###################################
+importance of relational databases
+###################################
+OG rule 1 = information rule
+all info in a relational database is represented explicity at a logical level and in exactly one way = by values in tables
+
+1. standardization of the data model
+once the data is transformed into rows and columns format your data is standardized
+can be queried using SQL
+
+2. flexibility in adding and altering tables
+relational databases give you flexibility to add tables, alter tables, and remove data
+
+3. data integrity
+strong data typing = avoid inserting data that will cause curroption
+
+4. SQL
+standard language to acces the data
+
+5. simplicity
+data is systematically stored and modeled in tabular format
+
+6. intuitive organization
+models should be an intuitive 
+
+###################################
+OLAP vs OLTP
+###################################
+OLAP = online analytical processing
+allow for complex analytical and ad-hoc queries
+focus on aggregations
+optimized for reads
+
+OLTP = online transactional processing
+less complex queries in large volumes
+for read, insert, update, and delete queries
+
+###################################
+normalization vs denormalization
+###################################
+normalization
+process of structuring a relational database in accordance with a series of normal forms
+organize so that dependencies are properly enforced by database integrity constraints 
+reduce data redudency = minimize storage, avoid out-of-date data
+increase data integrity = want to update the data in one place and have that be the source of truth 
+
+objectives of normal form
+1. free the database from unwanted insertions, updates, and deletion dependencies
+if I have to update my data, I want to update just in one place
+2. reduce the need to refactor the database as new types of data are introduced 
+3. make the relational model more informative to users
+4. make the database neutral to query statistics
+
+denormalization
+must be done for read-heavy workflows to increase process
+will not feel as natural
+will have duplicate copies of your data 
