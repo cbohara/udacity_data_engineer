@@ -1,3 +1,58 @@
+#############################
+relational databases
+#############################
+organize data into one more tables of columns and rows with a unique key ID each row
+table aka relation
+attribute aka column
+tuple aka row
+generally each table represents 1 entity type (ie customer or product)
+
+database/schema = collection of tables
+tables/relation = grouping of rows sharing the same labeled elements
+
+###################################
+when to use a relational database
+###################################
+1. ease of use with SQL
+2. ability to use JOINS - combine more than one table based on a common key
+3. ability to aggregations and analytics
+4. smaller data volume
+5. model the data itself - not modeling your data to the queries
+6. secondary indexes - an index that is not the primary key
+7. ACID transactions
+
+#####
+ACID
+#####
+guarantee validity even in the event of power failures, errors
+Atomicity = the whole transaction is processed or nothing is processed 
+ex: if transferring money from checking to savings account, both steps must be success or else no steps must occur
+
+Consistency = only transactions that abide by constrains and rules is written into the database otherwise database keeps previous state
+ex: cannot insert an integer for a field that requires a boolean
+
+Isolation = transactions are processed independently and securely
+the rows that are effected by the query are locked until the transaction is complete
+other queries are not able to access these rows 
+this ensures correctness of data for multiple users running queries against the database
+
+https://www.lifewire.com/isolation-definition-1019173
+all transactions are carried out as if it is the only transaction in the system
+need to entirely complete one transaction before executing another transaction
+ex: Joe issues a transaction on a database at the same time Mary issues a different transaction
+both transactions should operate in an isolated  manner 
+the database should perform Joe's entire transaction before executing Mary's or vice versa
+this prevents Joe's transaction from reading intermediate data produced as side effects of Mary's transaction that will not be written to the db
+
+Durability = completed transactions are saved to the database even in cases of system failure
+guarantees once a transaction has been COMMITTED it will remain committed even in the case of a system failure
+transaction is recorded in non-volatile memory (ie not in RAM)
+ex: if you unplug a computer with a database and plug the computer back in, the data will be there
+
+Postgres
+requires you to commit after every transaction
+set autocommit=True to avoid having to commit after every transaction
+
 ###################################
 importance of relational databases
 ###################################
@@ -22,36 +77,3 @@ data is systematically stored and modeled in tabular format
 
 6. intuitive organization
 models should be an intuitive 
-
-###################################
-OLAP vs OLTP
-###################################
-OLAP = online analytical processing
-allow for complex analytical and ad-hoc queries
-focus on aggregations
-optimized for reads
-
-OLTP = online transactional processing
-less complex queries in large volumes
-for read, insert, update, and delete queries
-
-###################################
-normalization vs denormalization
-###################################
-normalization
-process of structuring a relational database in accordance with a series of normal forms
-organize so that dependencies are properly enforced by database integrity constraints 
-reduce data redudency = minimize storage, avoid out-of-date data
-increase data integrity = want to update the data in one place and have that be the source of truth 
-
-objectives of normal form
-1. free the database from unwanted insertions, updates, and deletion dependencies
-if I have to update my data, I want to update just in one place
-2. reduce the need to refactor the database as new types of data are introduced 
-3. make the relational model more informative to users
-4. make the database neutral to query statistics
-
-denormalization
-must be done for read-heavy workflows to increase process
-will not feel as natural
-will have duplicate copies of your data 

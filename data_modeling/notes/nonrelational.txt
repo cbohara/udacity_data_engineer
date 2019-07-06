@@ -1,0 +1,98 @@
+##################################
+when to use NoSQL database 
+##################################
+1. large amounts of data
+relational db can only scale vertically = add more resources to a single machine = not distributed databases
+you are limited by the amount of data you can store on one machine
+
+2. need to store data in different data types formats
+not designed to handle non-structured (ie JSON) data
+
+3. need high thoroughput = fast reads
+while ACID transactions add benefits, they slow down the process of reading and writing data
+
+4. flexible schemas
+allow columns to be added that do not have to be used by every row 
+saving disk space bc in RDBMS nulls take up space
+
+5. need high availability 
+bc relational db are one one machine = single point of failure 
+even if there is a rollover backup system, recovery takes time
+a distributed system has higher availability 
+
+6. need to scale horizonally
+can add more machines to system to increase performance and space for data
+
+7. users are distributed + want low latency 
+
+high availability + horizonal scaling > evolution of NoSQL DB
+
+NoSQL database
+simpler design
+simpler horizontal scaling
+finer control of availability 
+data structures used are different > make some operations faster
+
+##################################
+common types of NoSQL databases
+##################################
+Apache Cassandra = Partition Row store
+data distributed by partitions across servers
+data organized in columns + rows format
+
+MongoDB = Document store
+in addition to key lookups performed by a key-value store
+the database offers an API or query language that retrieves document based on its contents
+easy to search documents 
+
+AWS DynamoDB = Key-Value store
+data is collected as key and value pairs
+
+Apache HBase = Wide column store
+also uses tables, rows, and columns
+but the names and the formats of the columns can vary from row to row on the same table = flexible schema
+
+Neo4J = Graph database
+data is all about relationships
+data is represented as nodes and edges
+
+##################################
+Apache Cassandra 
+##################################
+keyspace = collection of tables
+table = group of partitions
+rows = single item
+
+partitions
+fundamental unit of access
+collection of rows 
+how the data is distributed
+
+primary key = made up of partition key and clustering columns
+
+columns
+clustering columns + data columns
+these are the data elements 
+
+provides scalability + high availability without compromising performance
+proven fault-tolerance
+uses its own query language CQL (similar to SQL)
+
+linear scalability
+add nodes + the write performance will increase in a linear fashion
+
+full table scans are highly frowned upon
+bc you may be joining tables from hundreds or thousands of servers
+
+replication factor = # of copies of data
+if only working on 1 node then replication_factor = 1
+
+need to know what queries you will be performing on data when dealing with Cassandra
+if a common query is
+select * from music_library where year = 1970
+then need to make year the partition key in order to keep rows with the same year close together 
+make artist_name the clustering column to make each primary key unique
+assuming an artist does not release more than one album per year
+
+on a real production system you would never run a select * or select count(*)
+need to avoid running a broad query that will be checking data across multiple nodes

@@ -26,92 +26,141 @@ data organization is critical
 determines later data use
 need to make sure queries are simple and straightforward
 iterative process
+###################################
+OLAP vs OLTP
+###################################
+OLAP = online analytical processing
+allow for complex analytical and ad-hoc queries
+focus on aggregations
+optimized for reads
 
-#############################
-relational databases
-#############################
-organize data into one more tables of columns and rows with a unique key ID each row
-table aka relation
-attribute aka column
-tuple aka row
-generally each table represents 1 entity type (ie customer or product)
+OLTP = online transactional processing
+less complex queries in large volumes
+for read, insert, update, and delete queries
 
-database/schema = collection of tables
-tables/relation = grouping of rows sharing the same labeled elements
+###################################
+normalization vs denormalization
+###################################
+normalization
+process of structuring a relational database in accordance with a series of normal forms
+organize so that dependencies are properly enforced by database integrity constraints 
+reduce data redudency = minimize storage, avoid out-of-date data
+increase data integrity = want to update the data in one place and have that be the source of truth 
 
-when to use a relational database
-ease of use with SQL
-ability to use JOINS - combine more than one table based on a common key
-ability to aggregations and analytics
-smaller data volume
-model the data itself - not modeling your data to the queries
-secondary indexes - an index that is not the primary key
-ACID transactions
+denormalization
+must be done for read-heavy workflows to increase process
+will not feel as natural
+will have duplicate copies of your data 
 
-ACID
-guarantee validity even in the event of power failures, errors
-Atomicity = the whole transaction is processed or nothing is processed 
-ex: if transferring money from checking to savings account, both steps must be success or else no steps must occur
+#############
+normal form
+#############
+objectives of normal form
+1. free the database from unwanted insertions, updates, and deletion dependencies
+you want to be able to update the data in just one place
+2. reduce the need to refactor the database as new types of data are introduced 
+should be able to easily add in another column or another table with a foreign key
+3. make the relational model more informative to users
+4. make the database neutral to query statistics
+do not design your tables for particular queries
 
-Consistency = only transactions that abide by constrains and rules is written into the database otherwise database keeps previous state
-ex: cannot insert an integer for a field that requires a boolean
+the process of normalization is a step by step process
+each form must be met before the next form can be completed
+usually prod db strive to reach third normal form (3NF)
 
-Isolation = transactions are processed independently and securely
-the rows that are effected by the query are locked until the transaction is complete
-other queries are not able to access these rows 
-this ensures correctness of data for multiple users running queries against the database
+first normal form (1NF)
+atomic values = each cell contains unique and SINGLE values (no sets, lists, etc)
+be able to add data without altering data = try to avoid adding columns
+split different relations into different tables 
+keep relationships between tables together with foreign keys
+we need to be able to make sure we can link tables together with a unique key
 
-https://www.lifewire.com/isolation-definition-1019173
-all transactions are carried out as if it is the only transaction in the system
-need to entirely complete one transaction before executing another transaction
-ex: Joe issues a transaction on a database at the same time Mary issues a different transaction
-both transactions should operate in an isolated  manner 
-the database should perform Joe's entire transaction before executing Mary's or vice versa
-this prevents Joe's transaction from reading intermediate data produced as side effects of Mary's transaction that will not be written to the db
+second normal form (2NF)
+first need to be in 1NF
+all columns in the table must rely on a single primary key
+should not have a composite primary key = need to combine more than 1 columns to create a primary key 
 
-Durability = completed transactions are saved to the database even in cases of system failure
-guarantees once a transaction has been COMMITTED it will remain committed even in the case of a system failure
-transaction is recorded in non-volatile memory (ie not in RAM)
-ex: if you unplug a computer with a database and plug the computer back in, the data will be there
+ex: shouldn't have store ID and customer ID with customer values in the same table
+store ID | customer ID | customer name | ...
 
-Postgres
-requires you to commit after every transaction
-set autocommit=True to avoid having to commit after every transaction
+create a seperate table for the customer data
+customer ID | customer name | ...
 
-#############################
-non-relational (NoSQL) databases
-#############################
-when not to use a relational database model
-1. large amounts of data
-relational db can only scale vertically = add more resources to a single machine = not distributed databases
-you are limited by the amount of data you can store on one machine
+then create a table with only store ID and customer ID
+use this table to join the store ID to the customer
+store ID | customer ID
 
-2. need to store data in different data types formats
-not designed to handle non-structured (ie JSON) data
+third normal form (3NF)
+first need to be in 1NF + 2NF
+must not have any transitive dependencies 
 
-3. need high thoroughput = fast reads
-while ACID transactions add benefits, they slow down the process of reading and writing data
+https://www.lifewire.com/transitive-dependency-1019760
+Author_ID	Author				Book					Author_Nationality
+Auth_001	Orson Scott Card	Ender's Game			United States
+Auth_001	Orson Scott Card	Children of the Mind	United States
+Auth_002	Margaret Atwood		The Handmaid's Tale		Canada
 
-4. flexible schemas
-allow columns to be added that do not have to be used by every row 
-saving disk space bc in RDBMS nulls take up space
+Book → Author
+the Book attribute determines the Author attribute
+If you know the book name, you can learn the author's name
+However, Author does not determine Book, because an author can write multiple books
+For example, just because we know the author's name Orson Scott Card, we still don't know the book name
 
-5. need high availability 
-bc relational db are one one machine = single point of failure 
-even if there is a rollover backup system, recovery takes time
-a distributed system has higher availability 
+Author → Author_Nationality
+likewise the Author attribute determines the Author_Nationality, but not the other way around
+just because we know the nationality does not mean we can determine the author
 
-6. need to scale horizonally
-can add more machines to system to increase performance and space for data
+transative dependency = Book → Author_Nationality
+if we know the book name, we can determine the nationality via the Author column
 
-high availability + horizonal scaling > evolution of NoSQL DB
+how to avoid transative dependency
+create a seperate book table with the author ID
 
-NoSQL database
-simpler design
-simpler horizontal scaling
-finer control of availability 
-data structures used are different > make some operations faster
+BOOKS
+Book_ID		Book					Author_ID
+Book_001	Ender's Game			Auth_001
+Book_001	Children of the Mind	Auth_001
+Book_002	The Handmaid's Tale		Auth_002
 
-Common types of NoSQL databases
-Apache Cassandra = Partition Row store
+only dependency = Book_ID → Book 
+the Book depends on the Book_ID
 
+AUTHORS
+Author_ID	Author				Author_Nationality
+Auth_001	Orson Scott Card	United States
+Auth_002	Margaret Atwood		Canada
+
+Author_ID → Author
+Author depends on the Author_ID
+
+Author → Author_Nationality
+the nationality can be determined by the author
+
+Author_ID → Author_Nationality
+the nationality can be determined from the Author_ID through the Author attribute
+we still have a transitive dependency
+
+third try 
+BOOKS
+Book_ID		Book					Author_ID
+Book_001	Ender's Game			Auth_001
+Book_001	Children of the Mind	Auth_001
+Book_002	The Handmaid's Tale		Auth_002
+
+AUTHORS
+Author_ID	Author				Country_ID
+Auth_001	Orson Scott Card	Coun_001
+Auth_002	Margaret Atwood		Coun_002
+
+COUNTRIES
+Country_ID	Country
+Coun_001	United States
+Coun_002	Canada
+
+why are transitive dependencies bad database design?
+- if you deleted two books "Enders Game" and "Children of the Mind", then you'd delete Orson Scott Card completed from the DB
+- you cannot add a new author to the DB unless you know the name of their book
+- if an author changed their citizenship, then you'd have to change it in all records they appeared  
+
+very much like writing DRY code 
+if you need to make updates later, you don't want to have to do it over and over again
