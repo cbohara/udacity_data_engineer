@@ -77,3 +77,141 @@ data is systematically stored and modeled in tabular format
 
 6. intuitive organization
 models should be an intuitive 
+
+###################################
+normalization vs denormalization
+###################################
+normalization
+process of structuring a relational database in accordance with a series of normal forms
+organize so that dependencies are properly enforced by database integrity constraints 
+reduce data redudency = minimize storage, avoid out-of-date data
+increase data integrity = want to update the data in one place and have that be the source of truth 
+
+denormalization
+must be done for read-heavy workflows to increase process
+will not feel as natural
+will have duplicate copies of your data 
+
+#############
+normal form
+#############
+objectives of normal form
+1. free the database from unwanted insertions, updates, and deletion dependencies
+you want to be able to update the data in just one place
+2. reduce the need to refactor the database as new types of data are introduced 
+should be able to easily add in another column or another table with a foreign key
+3. make the relational model more informative to users
+4. make the database neutral to query statistics
+do not design your tables for particular queries
+
+the process of normalization is a step by step process
+each form must be met before the next form can be completed
+usually prod db strive to reach third normal form (3NF)
+
+first normal form (1NF)
+atomic values = each cell contains unique and SINGLE values (no sets, lists, etc)
+be able to add data without altering data = try to avoid adding columns
+split different relations into different tables 
+keep relationships between tables together with foreign keys
+we need to be able to make sure we can link tables together with a unique key
+
+second normal form (2NF)
+first need to be in 1NF
+all columns in the table must rely on a single primary key
+should not have a composite primary key = need to combine more than 1 columns to create a primary key 
+
+ex: shouldn't have store ID and customer ID with customer values in the same table
+store ID | customer ID | customer name | ...
+
+create a seperate table for the customer data
+customer ID | customer name | ...
+
+then create a table with only store ID and customer ID
+use this table to join the store ID to the customer
+store ID | customer ID
+
+third normal form (3NF)
+first need to be in 1NF + 2NF
+must not have any transitive dependencies 
+
+https://www.lifewire.com/transitive-dependency-1019760
+Author_ID	Author				Book					Author_Nationality
+Auth_001	Orson Scott Card	Ender's Game			United States
+Auth_001	Orson Scott Card	Children of the Mind	United States
+Auth_002	Margaret Atwood		The Handmaid's Tale		Canada
+
+Book → Author
+the Book attribute determines the Author attribute
+If you know the book name, you can learn the author's name
+However, Author does not determine Book, because an author can write multiple books
+For example, just because we know the author's name Orson Scott Card, we still don't know the book name
+
+Author → Author_Nationality
+likewise the Author attribute determines the Author_Nationality, but not the other way around
+just because we know the nationality does not mean we can determine the author
+
+transative dependency = Book → Author_Nationality
+if we know the book name, we can determine the nationality via the Author column
+
+how to avoid transative dependency
+create a seperate book table with the author ID
+
+BOOKS
+Book_ID		Book					Author_ID
+Book_001	Ender's Game			Auth_001
+Book_001	Children of the Mind	Auth_001
+Book_002	The Handmaid's Tale		Auth_002
+
+only dependency = Book_ID → Book 
+the Book depends on the Book_ID
+
+AUTHORS
+Author_ID	Author				Author_Nationality
+Auth_001	Orson Scott Card	United States
+Auth_002	Margaret Atwood		Canada
+
+Author_ID → Author
+Author depends on the Author_ID
+
+Author → Author_Nationality
+the nationality can be determined by the author
+
+Author_ID → Author_Nationality
+the nationality can be determined from the Author_ID through the Author attribute
+we still have a transitive dependency
+
+third try 
+BOOKS
+Book_ID		Book					Author_ID
+Book_001	Ender's Game			Auth_001
+Book_001	Children of the Mind	Auth_001
+Book_002	The Handmaid's Tale		Auth_002
+
+AUTHORS
+Author_ID	Author				Country_ID
+Auth_001	Orson Scott Card	Coun_001
+Auth_002	Margaret Atwood		Coun_002
+
+COUNTRIES
+Country_ID	Country
+Coun_001	United States
+Coun_002	Canada
+
+why are transitive dependencies bad database design?
+- if you deleted two books "Enders Game" and "Children of the Mind", then you'd delete Orson Scott Card completed from the DB
+- you cannot add a new author to the DB unless you know the name of their book
+- if an author changed their citizenship, then you'd have to change it in all records they appeared  
+
+very much like writing DRY code 
+if you need to make updates later, you don't want to have to do it over and over again
+
+###################################
+denormalization
+###################################
+normalization requires lots of joins = extremely slow 
+you first get your table in normalized form and from there you denormalize it
+denormalization may require more space on your system bc of redudency 
+reads will be fast (select) but writes will be slower (insert, update, delete)
+need to keep data consistent = need to fix all repeated data at the same time
+it's ok to create tables specifically to allow for quick reads
+

@@ -1,0 +1,40 @@
+#####################
+data modeling intro
+#####################
+organize elements of data and how they relate to one another
+easily translate to database modeling = final state of the model
+
+process to support business and user applications
+- need to know how much stock sold 
+- need to know about the user activity
+
+data must be retained and served to the business or the end users
+data must be stored and persisted and how it will relate to each other
+
+conceptual data modeling
+entity mapping
+giant whiteboarding session to connect how the data is related to one another
+
+logical data modeling
+move conceptual > logical
+using the concept of tables, schemas, and columns 
+
+physical data modeling
+transforming logical plan > DDL (data definition language)
+
+data organization is critical
+determines later data use
+need to make sure queries are simple and straightforward
+iterative process
+
+###################################
+OLAP vs OLTP
+###################################
+OLAP = online analytical processing
+allow for complex analytical and ad-hoc queries
+focus on aggregations
+optimized for reads
+
+OLTP = online transactional processing
+less complex queries in large volumes
+for read, insert, update, and delete queries
