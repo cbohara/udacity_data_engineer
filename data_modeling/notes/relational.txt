@@ -215,3 +215,81 @@ reads will be fast (select) but writes will be slower (insert, update, delete)
 need to keep data consistent = need to fix all repeated data at the same time
 it's ok to create tables specifically to allow for quick reads
 
+#################################
+fact + dimension tables
+#################################
+work together to create an organized data model
+created the same way but conceptually different
+you will find 1 or more fact tables for each dimension table
+
+fact tables 
+consist of measurements, metrics, or facts of a business process
+generally ints or numbers 
+facts = events that have actually happened 
+i.e. amount spent in a transaction
+
+dimension tables
+structure that categorizes facts + measures in order to enable users to answer business questions
+dimensions = people, products, places, and time
+all pieces of info not included in the fact table
+generally textual info or numbers not used for analysis (year)
+
+each dimension table with have 1+ fact tables joined with a foreign key
+
+####################
+snowflake schema
+####################
+logical arrangement of tables in a multidimensional database
+represented by centralized fact tables 
+connected to multiple dimensions
+
+############
+star schema
+############
+an important special case of the snowflake schema
+simplest style of data mart schema
+mostly widely used in the industry
+1+ or more fact tables referencing any number of dimension tables
+
+ex:
+sales fact table (star middle)
+date id
+store id
+product id
+units sold
+
+date dimension tables (star point)
+id
+date
+day
+month
+year
+quarter
+
+store dimension table (star point)
+id
+store number
+state 
+country
+
+product dimension table (star point)
+id 
+EAN code
+product name
+brand
+product category
+
+benefits of star schema
+- denormalize = avoid the headaches involves with crazy joins using 3NF
+- simplifies queries 
+- keep facts together in a single table = fast aggregations
+
+drawbacks of star schema
+- issues that come with denormalization
+- data integrity
+- decrease query flexibility
+when you denormalize and create tables based on specific queries, you limit the variety of ad-hoc queries you can execute
+- many to many relationships are hard to support
+
+snowflake vs star
+
