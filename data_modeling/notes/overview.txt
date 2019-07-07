@@ -26,6 +26,7 @@ data organization is critical
 determines later data use
 need to make sure queries are simple and straightforward
 iterative process
+
 ###################################
 OLAP vs OLTP
 ###################################
@@ -164,3 +165,13 @@ why are transitive dependencies bad database design?
 
 very much like writing DRY code 
 if you need to make updates later, you don't want to have to do it over and over again
+
+###################################
+denormalization
+###################################
+normalization requires lots of joins = extremely slow 
+you first get your table in normalized form and from there you denormalize it
+denormalization may require more space on your system bc of redudency 
+reads will be fast (select) but writes will be slower (insert, update, delete)
+need to keep data consistent = need to fix all repeated data at the same time
+
