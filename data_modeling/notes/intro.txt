@@ -39,7 +39,7 @@ use dimensional modeling for architecture design
 OLTP = online transactional processing
 less complex queries in large volumes
 for read, insert, update, and delete queries
-use entity-relationship modeling for architecture design
+use normal modeling for architecture design
 
 ####################
 data warehouse

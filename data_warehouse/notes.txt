@@ -57,5 +57,18 @@ quality assured
 handle new questions well
 secure
 
-dimensional model
+fact + dimension tables
+facts - should contain numeric + additive values
+a comment on an article is an event but not easily added = not a good fact
+an invoice number is numberic but adding it does not make sense = not a good fact
+total amount of an invoice can be added = good fact
 
+dimensions - should contain more contextual info
+date + time = good dimensions
+physical locations + their attributes
+
+exercises demonstrate moving from 3NF to dimension tables
+all needed dimensions are available in the fact table
+eliminates the need for deep joins
+star schema is easy to understand and write queries against
+queries with the star schema are more performant

@@ -292,4 +292,5 @@ when you denormalize and create tables based on specific queries, you limit the 
 - many to many relationships are hard to support
 
 snowflake vs star
-
+snowflake = normalized
+star = denormalized
