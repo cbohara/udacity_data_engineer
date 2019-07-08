@@ -1,0 +1,73 @@
+is there anything wrong with a data warehouse that we would need something different?
+nope 
+for many orgs dw is still the best way to go
+dimensional modeling is still very relevant
+still need clean, consistent and performant model that business users can easily use to gain insights and make decisions
+
+so why a data lake?
+abundance of unstructured data
+unprecedented volumes
+emergence of data science role
+new types of data analysis like predictive analytics, recommender systems 
+
+can we have unstructured data in the data warehouse?
+might be possible in the ETL process
+ex: might be able to distill some elements from json data and put in tabular format
+however you may later decide you want to transform the data differently
+deciding on a particular transform is a strong commitment without enough knowledge 
+some data is very difficult to get into tabular format (deep json structures)
+some text/pdgs can be stored as blobs in a db but totally useless unless processed to extract metrics
+
+rise of big data technologies
+HDFS made it possible to store pedabytes of data on commodity hardware
+much lower cost per TB vs traditional MPP (massive parallel processing) databases
+MapReduce, Pig, Hive, Impala and Spark make it possible to process this data at scale on the same hardware used for storage
+possible to make data analysis without inserting into predefined schema
+one can load a csv file + make a query without making a table 
+schema-on-read is great for processing unstructured data
+
+advanced analytics
+data scientists are restricted if they only can use the data warehouse single rigid representation of data
+ds needs freedom to explore the data in its raw form 
+
+offload ETL pressure from data warehouse to leverage new big data tools running on hadoop clusters
+
+schema-on-read
+traditionally data in a db table was much easier to process vs plain text files
+Spark + other tools makes it easy to work with a file without reading into a database
+you can let Spark infer the schema or you can specify the schema to be expected when reading it in to a dataframe
+then you can run queries on the dataframe using SQL as if it is in a table
+
+https://www.techopedia.com/definition/30153/schema-on-read
+traditional databases = schema-on-write
+aka the data has to be applied to a plan/schema when it is going into the database
+
+companies now want to be able to store data no matter how messy it is
+with Hadoop you do not have to worry about the data being structured going in
+you can make sense of the data when you read the data = schema-on-read
+
+Spark has the ability to read/write files in
+- text based formats 
+- binary formats like avro (save space) and parquet (columnar)
+- compression formations
+
+read/write to a variety of formats
+- local file system
+- HDFS
+- S3
+
+read/write to a variety of databases
+- SQL via JDBC
+- NoSQL
+
+all spark data exposed in a single abstraction = data frame
+
+data lake concepts
+all types of data welcome = high/low value, un- semi- structured
+ELT not ETL
+data is stored as is in its original format
+transforms are done later during processing > exported 
+data is processed with schema-on-read 
+no predefined star schema is there before transformation
+massive parallelism + scalability come out of the box with all big data processing tools
+
