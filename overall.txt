@@ -12,33 +12,25 @@ less complex queries in large volumes
 for read, insert, update, and delete queries
 use normal modeling for architecture design
 
-####################
-data warehouse
-####################
-https://en.wikipedia.org/wiki/Data_warehouse
-data warehouse
-system used for reporting and data analysis 
-central repositories of integrated data from 1+ disparate sources
-store current and historical data in a single place
-used for creating analytical reports throughout the enterprise 
-
-https://en.wikipedia.org/wiki/Data_mart
-data mart = subset of data warehouse
-usually oriented to specific business line or team
-info in a data mart pertains to a specific department
-
-data marts exist because info the in the database is not organized in a way that makes it readily accessible >
-queries are too complicated + resource consuming
-
-while transactional databases are designed to be updated, data warehouses + marts are read only
-data warehouses are designed to access large groups of related records
-data marts improve end-user response time by allowing users to have access to a specific type of data they need to view most often 
-provide data in a way that supports the users
-
-https://medium.com/@BluePi_In/deep-diving-in-the-world-of-data-warehousing-78c0d52f49a
-data warehousing helps implement
-- fetching data from multiple heterogenous data sources
-- clean, filter, and transform data for insights
-- store the data in a form and manner that is easy to access, understand, and use
-
+##############################
 data warehouse vs data lake
+##############################
+---------------------------------------------------------------------------------------------------------
+				| data warehouse							| data lake
+---------------------------------------------------------------------------------------------------------
+data form		| tabular									| all formats
+value			| high only									| high, medium, to be discovered
+ingestion		| ETL										| ELT
+data model		| star/snowflake conformed dimensions		| star/snowflake possible but
+				| data marts								| other ad-hoc representations possible
+				| OLAP cubes
+schema			| known before ingestion					| on the fly at the time of analysis
+				| schema-on-write							| schema-on-read
+technology		| expensive hardware						| commodity hardware with parallelism default
+data quality	| high with effort for consistency			| mixed
+				| clear rules of accessibility				| some data remains in raw format
+				| 											| some data transformed to higher quality
+users			| business analysts							| data scientists
+				| 											| business analysts
+				| 											| ML engineers
+analytics		| reports + BI visualizations				| ML, graph analytics, and data exploration
