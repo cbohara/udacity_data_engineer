@@ -1,16 +1,22 @@
+##########
 is there anything wrong with a data warehouse that we would need something different?
+##########
 nope 
 for many orgs dw is still the best way to go
 dimensional modeling is still very relevant
 still need clean, consistent and performant model that business users can easily use to gain insights and make decisions
-
+ 
+##########
 so why a data lake?
+##########
 abundance of unstructured data
 unprecedented volumes
 emergence of data science role
 new types of data analysis like predictive analytics, recommender systems 
-
+ 
+##########
 can we have unstructured data in the data warehouse?
+##########
 might be possible in the ETL process
 ex: might be able to distill some elements from json data and put in tabular format
 however you may later decide you want to transform the data differently
@@ -18,7 +24,9 @@ deciding on a particular transform is a strong commitment without enough knowled
 some data is very difficult to get into tabular format (deep json structures)
 some text/pdgs can be stored as blobs in a db but totally useless unless processed to extract metrics
 
+##########
 rise of big data technologies
+##########
 HDFS made it possible to store pedabytes of data on commodity hardware
 much lower cost per TB vs traditional MPP (massive parallel processing) databases
 MapReduce, Pig, Hive, Impala and Spark make it possible to process this data at scale on the same hardware used for storage
@@ -32,7 +40,9 @@ ds needs freedom to explore the data in its raw form
 
 offload ETL pressure from data warehouse to leverage new big data tools running on hadoop clusters
 
+##########
 schema-on-read
+##########
 traditionally data in a db table was much easier to process vs plain text files
 Spark + other tools makes it easy to work with a file without reading into a database
 you can let Spark infer the schema or you can specify the schema to be expected when reading it in to a dataframe
@@ -62,12 +72,42 @@ read/write to a variety of databases
 
 all spark data exposed in a single abstraction = data frame
 
+##########
 data lake concepts
+##########
 all types of data welcome = high/low value, un- semi- structured
 ELT not ETL
 data is stored as is in its original format
-transforms are done later during processing > exported 
+transforms are done later when processing the data 
 data is processed with schema-on-read 
 no predefined star schema is there before transformation
 massive parallelism + scalability come out of the box with all big data processing tools
+Spark packages available that make it easy to perform advanced analytics
 
+##########
+data lake options on AWS
+##########
+Storage			Processing			AWS-managed solution		Vendor managed
+HDFS			Spark				AWS EMR (HDFS + Spark)		EC2 + vendor solution (Databricks, Cloudera, etc)
+S3				Spark				AWS EMR (Spark only)		EC2 + vendor solution
+S3				Serverless			AWS Athena					Serverless
+
+AWS EMR (HDFS + Spark)
+EMR Cluster = storage nodes and processsing nodes
+Ingest data from S3 > EMR HDFS > query in place via Spark > BI + analytics apps
+Cluster is not supposed to be shut down (ie caching cluster)
+Cost = running each EC2 node at all times
+
+AWS EMR (S3 + Spark)
+Ingest data INTO S3 = lake storage
+Lake is not in HDFS
+Load data from S3 into Spark dataframe in EMR 
+EMR only responsible for processing
+Querying/processing results saved back to S3
+Cluster does not need to be 24 hour on
+Cheaper to save on S3 vs always on EC2 machines data nodes HDFS
+
+AWS Athena
+all data is stored in S3
+Athena is a service that can load and process data on serverless lambda resources
+Pay by execution time, not by machine up-time

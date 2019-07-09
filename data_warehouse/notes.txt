@@ -98,3 +98,126 @@ all needed dimensions are available in the fact table
 eliminates the need for deep joins
 star schema is easy to understand and write queries against
 queries with the star schema are more performant
+
+########################
+Kimball's bus architecture
+########################
+source transactional data > back room
+aka kitchen = prepare data to be served
+ETL system
+- transforms from source to target
+- conforms dimensions
+- no user query support
+
+front room = presentation area
+aka dining room = where the data is served to the customer
+- data organized into dimensional models
+- atomic level always needs to be available to get raw source data
+pre-aggregations are possible but also need to have raw source data
+- organized by business processes!
+does not allow for individual department specific modeling processes
+build dimensions so that they are usable by the entire organization
+ex: date + product dimension should be used across the organization, not for each department
+- requires careful big picture design
+- design goals = ease of use + query performance
+
+application
+where user can interact
+- ad hoc queries
+- standard reports
+- analytics apps
+
+ETL = a bit more involved than copying from SQL to SQL
+extracting
+- need to transform the transactional tables to dimensions tables
+- get data from its source
+
+transform 
+- integrate many sources together
+- possibly cleansing (inconsistencies, duplicates, missing values)
+- possibly producing diagnostic metadata about the quality of the source data
+
+loading
+- structure + load into the dimensional models
+
+########################
+independent data marts
+########################
+more ad-hoc, more messy, but happens in reality
+each department may have its own ETL process = totally unaware of each other, totally uncoordinated
+each department will setup their dimension models differently
+focused on 1 department + 1 business process
+problem = uncoordinated + incosistent use = get different results from different dimension tables
+
+########################
+Inmon's Corporate Information Factory (CIF)
+########################
+load normalized transactional source data > enterprise data warehouse in 3NF database
+then from the clean enterprise data warehouse > coordinated data marts 
+BI application has the opportunity to get data from the data mart OR from transactional source data
+
+2 ETL processes
+source system > 3NF DB (enterprise data warehouse)
+3NF DB > department data marts
+
+3NF DB
+- single integrated source of truth for the data marts
+- could be accessed by end users if needed
+
+data marts
+- they can be aggregated bc we have the source data available in the 3NF DB
+
+########################
+Hybrid Kimball bus + Inmon CIF
+########################
+load normalized transactional source data > enterprise data warehouse in 3NF database
+instead of 3NF DB > departments data marts, use dw bus architecture
+bus architecture = dimensional models that span the entire organization
+setup by business processes not by department needs
+
+########################
+OLAP Cubes
+########################
+after building facts + dimension tables > querying + exporing + getting insights
+OLAP cube = aggregation of fact metrics on a number of dimensions
+cube = 3 dimensions
+can aggregate on more than 3 dimensions if you group more dimensions together
+easy to communicate to business users 
+
+rollup
+less columns
+ex: roll up of month, movie, aggregate sales of each movie theater by country
+FEB				NY			Paris			SF
+Avatar			$25,000		$5,000			$15,000
+Star Wars		$15,000		$7,000			$10,000
+Batman			$3,500		$2,000			$3,000
+
+MARCH			NY			Paris			SF
+Avatar			$2,000		$5,000			$1,000
+Star Wars		$1,000		$7,000			$1,000
+Batman			$3,500		$2,000			$3,000
+
+drill down
+ex: decompose the sales of each city into smaller districs
+more columns
+OLAP cubes should store the finest grain of data (atomic data)
+allows us to drill down to the finest details > roll up as needed
+
+slicing
+restrict one of the dimensions by a single value
+ex: only keep MARCH dimension + remove other months
+MARCH			NY			Paris			SF
+Avatar			$2,000		$5,000			$1,000
+Star Wars		$1,000		$7,000			$1,000
+Batman			$3,500		$2,000			$3,000
+
+dice 
+same dimensions but computing a sub-cube by restricting some of the values of the dimension
+ex: only concerned with FEB + MARCH, Avatar + star wars in NY
+FEB				NY		
+Avatar			$25,000	
+Star Wars		$15,000	
+
+MARCH			NY		
+Avatar			$2,000	
+Star Wars		$1,000	
