@@ -34,3 +34,10 @@ users			| business analysts							| data scientists
 				| 											| business analysts
 				| 											| ML engineers
 analytics		| reports + BI visualizations				| ML, graph analytics, and data exploration
+
+######
+S3
+######
+be careful with making data in your S3 bucket publicly available
+you may end up having to pay lots of fees in data transfers from your bucket if you share this link 
+and many people access large amounts of data with it

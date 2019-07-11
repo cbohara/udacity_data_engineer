@@ -107,7 +107,27 @@ Querying/processing results saved back to S3
 Cluster does not need to be 24 hour on
 Cheaper to save on S3 vs always on EC2 machines data nodes HDFS
 
+############
 AWS Athena
+############
 all data is stored in S3
-Athena is a service that can load and process data on serverless lambda resources
-Pay by execution time, not by machine up-time
+athena is a service that can load and process data on serverless lambda resources
+pay by execution time, not by machine up-time
+
+setup Glue crawler to infer schema on the underlying S3 files
+named the database pagila
+s3://udacity-cbohara/pagila/
+you can run the crawler on a schedule if you expect the schema of your input to be dynamic
+
+by default glue will create a different table based on the subdirectory
+s3://udacity-cbohara/pagila/actor/
+created an actor table 
+from the
+s3://udacity-cbohara/pagila/actor/actor.csv
+
+###########
+considerations 
+###########
+prone to be a chaotic data dump so need to document everything 
+data governance = telling who has access to what = hard bc all is available
+you can still setup data lake in Athena using dimensional models > business results
