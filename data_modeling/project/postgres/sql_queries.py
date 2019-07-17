@@ -13,12 +13,12 @@ time_table_drop = "drop table if exists time"
 # songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent
 songplay_table_create = ("""
 create table if not exists songplays (
-songplay_id serial not null,
-start_time timestamp,
-user_id integer,
+songplay_id serial primary key,
+start_time timestamp not null,
+user_id integer not null,
 song_id varchar,
 artist_id varchar,
-session_id integer,
+session_id integer not null,
 location varchar,
 user_agent varchar
 )""")
@@ -28,11 +28,11 @@ user_agent varchar
 # user_id, first_name, last_name, gender, level
 user_table_create = ("""
 create table if not exists users (
-user_id integer not null,
+user_id integer primary key,
 first_name varchar,
 last_name varchar,
 gender varchar,
-level varchar
+level varchar not null
 )""")
 
 # song dimension table
@@ -40,9 +40,9 @@ level varchar
 # song_id, title, artist_id, year, duration
 song_table_create = ("""
 create table if not exists songs (
-song_id varchar not null,
-title varchar,
-artist_id varchar,
+song_id varchar primary key,
+title varchar not null,
+artist_id varchar not null,
 year integer,
 duration numeric
 )""")
@@ -52,8 +52,8 @@ duration numeric
 # artist_id, name, location, latitude, longitude
 artist_table_create = ("""
 create table if not exists artists (
-artist_id varchar not null,
-name varchar,
+artist_id varchar primary key,
+name varchar not null,
 location varchar,
 latitude numeric,
 longitude numeric
@@ -64,13 +64,13 @@ longitude numeric
 # start_time, hour, day, week, month, year, weekday
 time_table_create = ("""
 create table if not exists time (
-start_time timestamp not null,
-hour integer,
-day integer,
-week integer,
-month integer,
-year integer, 
-weekday integer
+start_time timestamp primary key,
+hour integer not null,
+day integer not null,
+week integer not null,
+month integer not null,
+year integer not null,
+weekday integer not null
 )""")
 
 # INSERT RECORDS
@@ -95,6 +95,7 @@ last_name,
 gender,
 level
 ) values (%s, %s, %s, %s, %s)
+on conflict (level) do update set level = excluded.level
 """)
 
 song_table_insert = ("""
@@ -103,8 +104,9 @@ song_id,
 title,
 artist_id,
 year,
-duration) 
+duration)
 values (%s, %s, %s, %s, %s)
+on conflict (song_id) do nothing
 """)
 
 artist_table_insert = ("""
@@ -115,6 +117,7 @@ location,
 latitude,
 longitude
 ) values (%s, %s, %s, %s, %s)
+on conflict (artist_id) do nothing
 """)
 
 
@@ -125,9 +128,10 @@ hour,
 day,
 week,
 month,
-year, 
+year,
 weekday
 ) values (%s, %s, %s, %s, %s, %s, %s)
+on conflict (start_time) do nothing
 """)
 
 # FIND SONGS
