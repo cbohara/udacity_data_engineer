@@ -178,3 +178,39 @@ losing customers to outages or poor performance = expensive
 CQL = similiar to SQL but no joins, group by, or subqueries
 
 use WHERE clause to determine what to partition on
+
+####################################
+primary key + clustering columns
+####################################
+primary key =
+how each row can be uniquely identified
+how the data is distributed across the nodes in our system
+
+first element of the primary key = partition key
+determines the distribution of data across the system
+the partition key's row value will be hashed (turned into a number)
+each node hold a range of values so the hashed value will fall within the appropriate range for a specific node
+
+chose a key that will be evenly distributed
+ex: don't choose state because more people live in CA vs Vermont
+
+simple primary key = one column that is also the partition key
+composite primary key = more than one column is used as the key
+used when a simple primary key would not work bc the data is too large to reside on a single partition
+ex: distribute by year with a combo of artist names
+the values will be hashed together and stored on the appropriate node
+
+clustering columns
+determines the sort order within a given partition
+sort the data in sorted asc order
+can have more than one clustering column
+
+ex:
+CREATE TABLE music_library (year int, artist_name text, album_name text) 
+PRIMARY KEY ((year), artist_name, album_name)
+
+distributed by the primary key = partition key = year
+then organized in asc order first by the artist name and then by the album name
+artist_name + album name = clustering columns
+
+primary key = parition key + clustering columns
