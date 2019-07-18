@@ -96,3 +96,85 @@ assuming an artist does not release more than one album per year
 
 on a real production system you would never run a select * or select count(*)
 need to avoid running a broad query that will be checking data across multiple nodes
+
+masterless architecture
+no single point of failure 
+highly available = system is always up, no downtime
+
+nodes = server 
+as you add more nodes to the system, your performance will increase linearly
+
+######################
+distributed database
+######################
+database made up of multiple machines
+need to keep copies of your data on multiple machines
+ensures that the data is still available when a node goes down
+
+eventual consistency
+if over time, if no new changes are made, then the value of the data should be consistent across machines
+if changes/updates are made > data may be inconsistent on the different machines
+inconsistencies usually only last for a few seconds
+there are workarounds to avoid getting stale data
+
+what does the network look like? 
+In Apache Cassandra every node is connected to every node -- it's peer to peer database architecture
+
+#######################
+CAP theorem
+#######################
+consistency
+every read from the database gets the latest + correct piece of data
+OR it gets an error
+
+availability
+every request is received + response is given
+no guarantee that the data is the latest update
+
+partition tolerance 
+the system continues to work regardless if you lose network connectivity between nodes
+
+Cassandra + other NoSQL databases choose to be highly available at the cost of consistency
+it is an AP (availability + partition tolerant) database
+
+is eventual consistency the opposite of what is promised by SQL databases per the ACID principle?
+
+consistency in ACID principle = only transactions that abide by constraints + database rules > written to DB
+otherwise the database is kept in its consistent state
+aka the data should be correct across all rows + tables
+
+CAP consistency = every read from the DB gets the latest piece of data or an error
+aka all replicas of the same data will be the same value across a distributed system
+
+ACID = on write 
+CAP = on read 
+
+https://www.voltdb.com/blog/2015/10/22/disambiguating-acid-cap/
+CAP
+for a system to be distributed = it has network partitions
+in the face of network partitions, you can't always have perfect consistency + 100% availability
+plan accordingly
+
+how do they differ?
+ACID consistency is all about database rules
+CAP consistency promises that every replica of the same logical value, spread across multiple nodes, has the same exact value at all times
+
+####################################
+denormalization in Apache Cassandra
+####################################
+denormalization must be done for fast reads
+you need to think about your queries first
+ad-hoc querying is not ideal with Cassandra
+
+there are no JOINS in Cassandra
+without JOINS you can only query on one table at a time
+
+one table per query = great strategy
+inevitable to have duplicate data
+
+the performance benefits + high availability far outweigh additional storage costs
+losing customers to outages or poor performance = expensive
+
+CQL = similiar to SQL but no joins, group by, or subqueries
+
+use WHERE clause to determine what to partition on
