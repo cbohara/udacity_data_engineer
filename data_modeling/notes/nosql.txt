@@ -214,3 +214,6 @@ then organized in asc order first by the artist name and then by the album name
 artist_name + album name = clustering columns
 
 primary key = parition key + clustering columns
+
+must have a unique primary key for each row
+if you cannot achieve that with one row, then use a composite key
