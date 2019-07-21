@@ -217,3 +217,25 @@ primary key = parition key + clustering columns
 
 must have a unique primary key for each row
 if you cannot achieve that with one row, then use a composite key
+
+partition key always goes first, followed by clustering columns
+
+Cassandra data modeling = query first
+the partition key must be included in a query
+therefore WHERE clause must be included in the query 
+failure to do so will result in a error
+
+also cannot include a column in the WHERE clause if it was not included in the PRIMARY KEY definition
+failure to do so will result in a error
+
+it is recommended that one partition key be queried at a time for performance 
+
+full table scan = pulling the data for the entire table which may reside over many many nodes
+
+the WHERE statement is allowing us to do the fast reads
+with Apache Cassandra, we are talking about big data -- think terabytes of data -- so we are making it fast for read purposes
+data is spread across all the nodes
+by using the WHERE statement, we know which node to go to, from which node to get that data and serve it back
+ex: imagine we have 10 years of data on 10 nodes or servers
+1 year's data is on a separate node
+by using the WHERE year = 1 statement we know which node to visit fast to pull the data from
