@@ -239,3 +239,40 @@ by using the WHERE statement, we know which node to go to, from which node to ge
 ex: imagine we have 10 years of data on 10 nodes or servers
 1 year's data is on a separate node
 by using the WHERE year = 1 statement we know which node to visit fast to pull the data from
+
+#########################
+keyspace
+#########################
+keyspace = schema
+a keyspace in a NoSQL data store is an object that holds together all column families of a design
+
+table = column families
+row = key-value pair in which the primary key is mapped to a value that is a set of columns
+column = tuple (column name, value, timestamp)
+
+################
+https://www.datastax.com/dev/blog/basic-rules-of-cassandra-data-modeling
+################
+if you can perform extra writes to improve the efficiency of your read, it is almost always a good tradeoff
+writes are cheap in cassandra 
+reads tend to be more expensive + much more difficult to tune
+
+don't be afraid of data duplication
+disk space is generally the cheapest resource (compared to CPU, memory, disk IOPs, or network)
+NO JOINS
+
+basic goals
+1. spread data evenly around your cluster 
+you want every node in the cluster to have the same amount of data
+rows are spread around the cluster based on a hash of the partition key 
+partition key = first element of primary key
+
+2. minimize the number of partitions read
+partitions = groups of rows that share the same partition key
+when you issue a read query, you want to read rows from as few partitions as possible
+why is this important? each partition may reside on a different node
+the coordiator will generally need to issue separate commands to separate nodes for each partition you request
+this adds a lot of overhead and increases the variation in latency 
+even when all the partitions are on a single node, it can still be expensive depending on how the rows are stored
+
+these two goals often conflict, so you'll need to try to balance them
