@@ -254,4 +254,3 @@ approach 2
 compute OLAP cubes on the fly or as a materialized view from existing relational databases where the dimensional models reside on ROLAP
 don't need special technology to get the job done
 ROLAP = relational online analytics processing
-

@@ -1,0 +1,57 @@
+##############
+Redshift
+##############
+column-oriented storage
+best suited for storing OLAP workloads, summing over long history
+under the hood redshift is postgres with extensions to allow for columnar storage
+
+traditional RDBMS
+a single query 
+- will perform a full table scan
+- always executed on a single CPU of a single machine
+	- this is acceptable because OLTP queries are not compute-intensive 
+	- usually just updates or inserting a few rows
+
+MPP (massive parallel processing) databases
+a table is partitioned across multiple machines
+each partition can be processed by a separate CPU in parallel
+
+###########
+architecture
+###########
+one leader node
+accepts all client communication 
+coordinates compute nodes
+optimizes query execution
+
+multiple compute node
+has its own CPU, memory, and disk (depending on EC2 instance type)
+scale up - have a few powerful nodes
+scale out - having many average nodes
+
+compute node slice
+each compute node is logically divided into slices
+slice = unit of parallelism
+a cluster with n slices can process n partitions of a table simultaneously
+
+can choose compute optimize nodes or storage optimized nodes
+
+###############
+ETL
+###############
+what if you want to transfer from mysql to postgres?
+traditional solution
+mysql > SELECT > ETL server > INSERT/COPY > postgres
+
+ETL server will have both mysql and postgres clients installed on it
+you can run a select statement on the ETL server to get all the data 
+write the intermediate data into csv files on the ETL server
+then insert/copy the csv files into postgres
+
+AWS solution
+ETL server is an EC2 instance that acts a client to RDS and Redshift to issue COPY commands
+the storage itself will reside in S3
+AWS RDS (relational database service) > COPY > S3 > COPY > Redshift
+
+Redshift + ETL in context
+diverse number of sources
