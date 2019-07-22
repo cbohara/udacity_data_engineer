@@ -41,3 +41,17 @@ S3
 be careful with making data in your S3 bucket publicly available
 you may end up having to pay lots of fees in data transfers from your bucket if you share this link 
 and many people access large amounts of data with it
+
+#######
+views
+#######
+view
+virtual table that represents the results of a database query
+when you query a view, the DBMS converts it to the ultimate query being ran against the table the view was created on top of
+the result can be dynamic if the underlying table has changed
+
+materialized view
+database object that contains the results of a query
+cached as a concrete table
+the result is not dynamic
+only if the view is manually updated and the underlying table has been updated can the result of the materialized view change

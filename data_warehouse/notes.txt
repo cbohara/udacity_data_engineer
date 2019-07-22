@@ -233,3 +233,25 @@ total revenue		revenue by movie		revenue by movie, branch		revenue by movie, bra
 
 saving/materializing the output of a cube operation
 usually enough info to answer most questions from business users without having the process the fact table each time
+
+######################
+data warehouse technologies
+######################
+data is available
+- in understandable + performant data models
+- with conformed dimensions (same dimensions used throughout the org) or separate data marts (dimensions per department)
+- for users to report + visualize 
+	- by interacting directly with the model via SQL queries
+	- in most cases through a BI application
+
+how do we serve OLAP cubes?
+approach 1
+pre-aggregate OLAP cubes 
+save them on a special purpose non-relational database (MOLAP)
+MOLAP = multi-dimensional online analytical processing
+
+approach 2
+compute OLAP cubes on the fly or as a materialized view from existing relational databases where the dimensional models reside on ROLAP
+don't need special technology to get the job done
+ROLAP = relational online analytics processing
+
