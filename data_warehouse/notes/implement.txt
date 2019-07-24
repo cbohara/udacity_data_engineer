@@ -55,3 +55,66 @@ AWS RDS (relational database service) > COPY > S3 > COPY > Redshift
 
 Redshift + ETL in context
 diverse number of sources
+S3 un-, semi-, and structured data
+RDS RDBMS
+DynamoDB columnar storage
+
+ETL processes
+get data from various sources into S3
+then can be loaded to Redshift
+
+Once in redshift > generate pre-aggregated OLAP cubes
+these cubes can reside in S3, RDS, Cassandra
+
+Then BI tools will query these pre-aggegrated metrics directly
+Avoid using raw data
+
+########################
+Redshift specific ETL
+########################
+Ingestion = COPY
+inserting data row by row is very slow
+transfer data from an S3 staging area to Redshift using the COPY command
+
+if file is large in size, better to break the file up into partitions
+each Redshift slice will act as a separate worker and will use ingest the split of a file in parallel, so the process will complete much faster
+allows COPY command to ingest the file in parallel
+identify files below together by
+1. common prefix OR 
+2. manifest file
+
+always better to be working with compressed data
+the S3 stage should be in the same AWS region as the Redshift cluster
+
+1. common prefix
+COPY redshift_table_name FROM 's3://bucket/split/part'
+CREDENTIALS 'iam role for Redshift to access S3' 
+gzip delimiter ';' region 'us-west-2';
+
+2. manifest file = explicit 
+COPY redshift_table_name FROM 's3://bucket/files.manifest'
+CREDENTIALS 'iam role for Redshift to access S3' 
+manifest;
+
+automatic compression optimization
+you can choose the optimal compression strategy PER COLUMN
+however COPY command will automatically makes best-effort compression decisions
+
+Export
+Redshift is accessible using JDBC
+Usually used to hook up to BI apps
+Will need to open up TCP ports in the Redshift node security group in order for the BI tools to access
+
+UNLOAD
+UNLOAD ('select * from venue limit 10;')
+to 's3://'
+iam role 'permissions for redshift to write to S3'
+
+########################
+Infrastructure as Code (IAC)
+########################
+Cloud Formation = specify resourcdes to launch
+all resources must be launched successfully together
+easy to tear down all resources as well
+
+
