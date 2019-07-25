@@ -254,3 +254,42 @@ approach 2
 compute OLAP cubes on the fly or as a materialized view from existing relational databases where the dimensional models reside on ROLAP
 don't need special technology to get the job done
 ROLAP = relational online analytics processing
+
+aggregates
+https://en.wikipedia.org/wiki/Aggregate_(data_warehouse)
+used in dimensional models
+facts = numeric values that can be aggregated
+dimensions = almost like objects representing users, time, etc
+
+produce positive effects on the the time it takes to query large sets of data
+
+simplest form
+aggregate = simple summary table generated using group by
+
+more common
+take a dimension + change the granularity of this dimension
+when changing the grain of the dimension (from timestamp > day), the fact table has to be partially summarized to fit the new grain of the new dimension
+create new dimensional and fact tables as a result
+
+aggregates = pre-calculated summary data 
+since aggregations are usually precomputed, partially summarized data > new aggregate tables 
+
+when facts are aggregated you either
+1. eliminate dimensionality
+2. by associating the facts with a rolled up dimension
+rolled up dimensions should be shurnked versions of the dimensions associated with the granualar base facts
+should conform to the base dimension tables
+
+why aggregates can make such a dramatic increase in the performance of the data warehouse = reduce # of rows to be accessed when responding to a query
+
+having aggregates and atomic data > increase in the complexity of the dimensional model
+when a request is made, the data warehouse should return data from the table with the correct grain
+so when requests to the data warehouse are made, aggregate navigator functionality should be implemented > determine correct table with correct grain
+
+aggregator navigator
+examines the query to determine if it can be answered using smaller, aggregate table
+implementations
+- OLAP engines
+- materialized views
+- relational ROLAP 
+- BI application servers or query tool
