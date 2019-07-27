@@ -113,8 +113,14 @@ iam role 'permissions for redshift to write to S3'
 ########################
 Infrastructure as Code (IAC)
 ########################
-Cloud Formation = specify resourcdes to launch
-all resources must be launched successfully together
-easy to tear down all resources as well
+Cloud Formation = specify resources to launch
+json description of all resources, permissions, constraints 
+atomic = all succeed or all fail
+easy to spin up and tear down a stack
 
+using Python SDK we can
+create a role to allow the Redshift clusters to call AWS services
+attach policy to the role to allow for S3 read only access
+allow ingress traffic to Redshift via security group
 
+much more efficient to load in parallel smaller files vs single big file
