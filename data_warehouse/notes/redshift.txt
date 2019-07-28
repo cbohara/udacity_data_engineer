@@ -36,6 +36,34 @@ a cluster with n slices can process n partitions of a table simultaneously
 
 can choose compute optimize nodes or storage optimized nodes
 
+https://docs.aws.amazon.com/redshift/latest/dg/c_high_level_system_architecture.html
+client apps
+Redshift integrates with most ETL and BI tools
+Postgres under the hood
+connect via JDBC 
+communicate directly with the leader node
+
+cluster = 1+ compute nodes
+a cluster contains 1+ databases 
+SQL client communicates with leader node > coordinates query execution with compute nodes
+
+leader node 
+coordinates compute nodes
+handles external communication
+parses and develops execution plans to carry out database operations
+aka the series of steps required to obtain results from complex queries
+based on the execution plan, the leader node compiles + distributes both the code and a portion of the data to the compute node
+leader node will distribute SQL statements to the compute node only when a query references tables that are stored on the compute node
+
+compute node
+data is stored on the compute nodes
+executes compiled code on a portion of data + send intermediate results back to leader node for final aggregation
+
+node slices
+each compute node is partitioned into slices
+leader gives work to the slices directly
+slices complete work in parallel
+
 ###############
 ETL
 ###############
@@ -77,6 +105,7 @@ inserting data row by row is very slow
 transfer data from an S3 staging area to Redshift using the COPY command
 
 if file is large in size, better to break the file up into partitions
+much more efficient to load in parallel smaller files vs single big file
 each Redshift slice will act as a separate worker and will use ingest the split of a file in parallel, so the process will complete much faster
 allows COPY command to ingest the file in parallel
 identify files below together by
@@ -123,4 +152,53 @@ create a role to allow the Redshift clusters to call AWS services
 attach policy to the role to allow for S3 read only access
 allow ingress traffic to Redshift via security group
 
-much more efficient to load in parallel smaller files vs single big file
+########################
+optimizing table design
+########################
+you can design your tables to speed up querying
+choose the strategy based on the frequent access pattern of the table
+
+distribution styles
+EVEN
+round-robin distribution over all the slices to achieve load balancing
+good if don't know much about the data distribution ahead of time
+not great if need to do joins bc requires shuffling of the data
+
+ALL
+most dimension tables are generally small vs fact tables
+small dimension tables (aka lookup tables) could be replicated on all slices to speed up joins
+we can keep the fact table evenly distributed, and have all the dimension tables available on every slice for quick lookup/joins
+eliminates shuffling when using JOIN
+
+AUTO
+allow Redshift to automatically assign distribution style
+small tables = ALL
+large tables = EVEN
+
+KEY
+rows having similar values are stored on the same slice
+ex: for a given fact table, distribute all rows with the same dimension key onto the same slice
+this can lead to a skewed distribution
+useful if the dimension table is too large to use ALL
+we then distribute both the fact table and the dimension table using the same distribution key
+eliminates shuffling when using JOIN
+
+sorting key
+choose which column you want to have sorted data in
+rows are sorted before distribution to slices 
+minimizes query time because each node already has continguous ranges of rows based on the sorting key
+good to use when using ORDER BY frequently 
+ex: always using ORDER BY date
+useful for sorting date dimension foreign key in a fact table
+
+############
+demo
+############
+inside one database you can create 2 schemas
+inside each schema you can create tables with the same names
+
+optimized schema can take longer to load into redshift
+the benefit = faster query times
+
+Redshift will automatically keep the queries cached 
+If you run the query again, it will return the result of the cache vs running the query again
