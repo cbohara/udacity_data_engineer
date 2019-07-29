@@ -10,7 +10,6 @@ time_table_drop = "drop table if exists time"
 
 # songplay fact table
 # records in log data associated with song plays i.e. records with page NextSong
-# songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent
 songplay_table_create = ("""
 create table if not exists songplays (
 songplay_id serial primary key,
@@ -25,7 +24,6 @@ user_agent varchar
 
 # user dimension table
 # users in the app 
-# user_id, first_name, last_name, gender, level
 user_table_create = ("""
 create table if not exists users (
 user_id integer primary key,
@@ -37,7 +35,6 @@ level varchar not null
 
 # song dimension table
 # songs in the music DB
-# song_id, title, artist_id, year, duration
 song_table_create = ("""
 create table if not exists songs (
 song_id varchar primary key,
@@ -49,7 +46,6 @@ duration numeric
 
 # artist dimension table
 # artists in the music DB
-# artist_id, name, location, latitude, longitude
 artist_table_create = ("""
 create table if not exists artists (
 artist_id varchar primary key,
@@ -61,7 +57,6 @@ longitude numeric
 
 # time dimension table
 # timestamps of records in songplays broken down into specific units
-# start_time, hour, day, week, month, year, weekday
 time_table_create = ("""
 create table if not exists time (
 start_time timestamp primary key,
