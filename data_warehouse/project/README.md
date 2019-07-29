@@ -37,7 +37,7 @@ song_data/A/B/C/TRABCEI128F424C983.json
 
 ## Database Design
 
-The Postgres database contains tables following the star schema.
+The Redshift database contains tables following the star schema.
 
 ![ER Diagram](er.png)
 
