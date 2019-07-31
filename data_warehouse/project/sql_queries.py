@@ -45,11 +45,11 @@ userId integer
 staging_songs_table_create = ("""
 create table if not exists staging_songs (
 artist_id varchar,
-artist_latitude real,
+artist_latitude float,
 artist_location varchar,
-artist_longitude real,
+artist_longitude float,
 artist_name varchar,
-duration real,
+duration float,
 num_songs integer,
 song_id varchar,
 title varchar,
@@ -60,7 +60,7 @@ year integer
 # records in log data associated with song plays i.e. records with page NextSong
 songplay_table_create = ("""
 create table if not exists songplays (
-songplay_id integer identity(1, 1) not null sortkey,
+songplay_id integer primary key identity(1, 1) not null sortkey,
 start_time timestamp not null,
 user_id integer not null,
 song_id varchar,
@@ -74,7 +74,7 @@ user_agent varchar
 # users in the app 
 user_table_create = ("""
 create table if not exists users (
-user_id integer not null sortkey,
+user_id integer primary key not null sortkey,
 first_name varchar,
 last_name varchar,
 gender varchar,
@@ -85,7 +85,7 @@ level varchar not null
 # songs in the music DB
 song_table_create = ("""
 create table if not exists songs (
-song_id varchar not null sortkey,
+song_id varchar primary key not null sortkey,
 title varchar not null,
 artist_id varchar not null,
 year integer,
@@ -96,7 +96,7 @@ duration real
 # artists in the music DB
 artist_table_create = ("""
 create table if not exists artists (
-artist_id varchar not null sortkey,
+artist_id varchar primary key not null sortkey,
 name varchar not null,
 location varchar,
 latitude real,
@@ -107,7 +107,7 @@ longitude real
 # timestamps of records in songplays broken down into specific units
 time_table_create = ("""
 create table if not exists time (
-start_time timestamp not null sortkey,
+start_time timestamp primary key not null sortkey,
 hour integer not null,
 day integer not null,
 week integer not null,
@@ -162,7 +162,8 @@ sessionId as session_id,
 location,
 userAgent as user_agent
 from staging_events
-where userId is not null) as se
+where userId is not null
+and page = 'NextSong') as se
 left join 
 (select song_id, title from songs) as s
 on se.song = s.title
@@ -188,7 +189,9 @@ from (
 select se.userId, se.firstName, se.lastName, se.gender, se.level
 from 
 (
-(select userId, firstName, lastName, gender, level, ts from staging_events) as se
+(select userId, firstName, lastName, gender, level, ts
+from staging_events
+where page = 'NextSong') as se
 join
 (select userId, max(ts) as max_ts from staging_events group by userId) as t
 on se.userId = t.userId and se.ts = t.max_ts
@@ -204,7 +207,7 @@ artist_id,
 year,
 duration)
 select 
-song_id,
+distinct song_id,
 title,
 artist_id,
 year,
@@ -221,7 +224,7 @@ latitude,
 longitude
 )
 select 
-artist_id,
+distinct artist_id,
 artist_name,
 artist_location,
 artist_latitude,
@@ -240,16 +243,16 @@ year,
 weekday
 )
 select
-t.rts as start_time,
-extract(HOUR from t.rts) as hour,
-extract(DAY from t.rts) as day,
-extract(WEEK from t.rts) as week,
-extract(MONTH from t.rts) as month,
-extract(YEAR from t.rts) as year,
-extract(DW from t.rts) as weekday
+t.start_time as start_time,
+extract(HOUR from t.start_time) as hour,
+extract(DAY from t.start_time) as day,
+extract(WEEK from t.start_time) as week,
+extract(MONTH from t.start_time) as month,
+extract(YEAR from t.start_time) as year,
+extract(DW from t.start_time) as weekday
 from 
-(select distinct timestamp 'epoch' + ts * (interval '1 second'/1000) as rts
-from staging_events
+(select distinct start_time
+from songplays
 order by 1) as t
 """)
 
@@ -259,4 +262,4 @@ create_table_queries = [staging_events_table_create, staging_songs_table_create,
 drop_table_queries = [staging_events_table_drop, staging_songs_table_drop, songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
 drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
 copy_table_queries = [staging_events_copy, staging_songs_copy]
-insert_table_queries = [user_table_insert, song_table_insert, artist_table_insert, time_table_insert, songplay_table_insert]
+insert_table_queries = [user_table_insert, song_table_insert, artist_table_insert, songplay_table_insert, time_table_insert]
