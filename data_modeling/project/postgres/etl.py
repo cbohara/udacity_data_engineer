@@ -6,13 +6,13 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
-    """
-    This procedure processes a song file whose filepath has been provided as an argument.
-    It extracts the song information in order to store it into the songs table.
-    Then it extracts the artist information in order to store it into the artists table.
-    :param cur: the cursor variable used to interact with the database
-    :param filepath: the song filepath
-    """
+	"""
+	This procedure processes a song file whose filepath has been provided as an argument.
+	It extracts the song information in order to store it into the songs table.
+	Then it extracts the artist information in order to store it into the artists table.
+	:param cur: the cursor variable used to interact with the database
+	:param filepath: the song filepath
+	"""
 	# open song file
 	df = pd.read_json(filepath, lines=True)
 
@@ -26,15 +26,15 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
-    """
-    This procedure processes a log file whose filepath has been provided as an argument.
-    It filters out records for songs that are being played.  If an artist ID and song ID
-    are available in the tables it will include the appropriate IDs when updating the songsplay table.
-    Additionally the log files contain user data which will be inserted into the users table if the user
-    does not exist yet or has changed their subscription level.
-    :param cur: the cursor variable used to interact with the database
-    :param filepath: the log filepath
-    """
+	"""
+	This procedure processes a log file whose filepath has been provided as an argument.
+	It filters out records for songs that are being played.  If an artist ID and song ID
+	are available in the tables it will include the appropriate IDs when updating the songsplay table.
+	Additionally the log files contain user data which will be inserted into the users table if the user
+	does not exist yet or has changed their subscription level.
+	:param cur: the cursor variable used to interact with the database
+	:param filepath: the log filepath
+	"""
 	# open log file
 	df = pd.read_json(filepath, lines=True)
 
@@ -78,7 +78,7 @@ def process_data(cur, conn, filepath, func):
 	"""
 	This function is responsible for processing the data.  All the appropriate files are gathered.  For each file the
 	appropriate procedure will be executed in order to update the appropriate tables in the database.
-    :param cur: the cursor variable used to interact with the database
+	:param cur: the cursor variable used to interact with the database
 	:param conn: the active database connection variable
 	:param filepath: the filepath for the directory containing files to process
 	:param func: the function to use when processes the input file
