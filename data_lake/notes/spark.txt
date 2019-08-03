@@ -96,7 +96,7 @@ form of distributed computing
 the distinction is multiple CPUs have access to shared memory
 
 HDFS = data storage
-splits data into chunks 
+splits data into 64 or 128 MB chunks 
 stores chunks across a cluster of computers
 
 Hadoop MapReduce = programming model
@@ -146,6 +146,7 @@ methods are called as if the objects reside in the Python interpreter
 Java collections can be accessed via standard Python collection methods
 
 Spark context = entry point to Spark API
+connects the cluster with the application
 access Spark context through SparkSession
 SparkSession = used to perform computations across the cluster
 
@@ -197,7 +198,7 @@ generally combine all wet ingredients together first, then all dry ingredients
 these multi-step combos = stages in Spark
 
 ########################
-maps + lambda functions
+concepts
 ########################
 comes from math concept of mapping inputs to outputs
 apply a function to each value in the input
@@ -207,3 +208,12 @@ df.map(lambda song : song.lower())
 
 why is it called a lambda function?
 https://palmstroem.blogspot.com/2012/05/lambda-calculus-for-absolute-dummies.html
+
+imperitive = how
+provide all the details on how to accomplish a task
+
+declarative = what = Spark SQL
+ex: spark.sql("SELECT * FROM TABLE");
+more concerned with what we want the result to be
+there is a layer of abstraction for the user 
+
