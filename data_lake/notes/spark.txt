@@ -198,7 +198,7 @@ generally combine all wet ingredients together first, then all dry ingredients
 these multi-step combos = stages in Spark
 
 ########################
-concepts
+Spark SQL approaches
 ########################
 comes from math concept of mapping inputs to outputs
 apply a function to each value in the input
@@ -211,9 +211,43 @@ https://palmstroem.blogspot.com/2012/05/lambda-calculus-for-absolute-dummies.htm
 
 imperitive = how
 provide all the details on how to accomplish a task
+provide specific tranformations to apply to the data frame
 
 declarative = what = Spark SQL
 ex: spark.sql("SELECT * FROM TABLE");
 more concerned with what we want the result to be
 there is a layer of abstraction for the user 
 
+Why might you prefer to use SQL over data frames? Why might you prefer data frames over SQL?
+both Spark SQL and Spark Data Frames are part of the Spark SQL library
+both use the Spark SQL Catalyst Optimizer to optimize queries
+
+You might prefer SQL over data frames because the syntax is clearer especially for teams already experienced in SQL
+
+Spark data frames give you more control
+break down your queries into smaller steps, which can make debugging easier
+can also cache intermediate results or repartition intermediate results
+
+#####################
+RDDs vs DataFrames and Datasets
+https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html
+#####################
+RDD
+immutable distributed collection of data
+partitioned across nodes in the cluster
+can be operated on in parallel 
+
+When to use RDDs?
+you want low level control of transformations + actions performed on the data set
+data is unstructured (ex: streams of text)
+you don't care about imposing a schema 
+
+DataFrames
+immutable distributed collection of data
+untyped JVM objects
+data is organized into named columns, like a table in a relational database 
+
+DataSet
+collection of strongly typed JVM objects
+dictated by the class you define in Scala/Java
+not available in Python
