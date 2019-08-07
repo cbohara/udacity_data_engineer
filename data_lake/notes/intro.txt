@@ -1,0 +1,260 @@
+##############
+the power of spark
+##############
+###########
+hardware
+###########
+
+CPU = central processing unit
+"brain"
+every process is handled by the CPU
+typical CPU can execute over 2.5 billion operations per second
+
+CPU can store small amounts of data inside itself = registers
+holds the data the CPU is currently working with
+
+ex: script reads in 40 MB data file + analyzes
+when you execute the script, the instructions are loaded into the CPU
+CPU then instructs the computer to take the 40 MB from disk + store data in RAM
+if you want to sum a column of data, the CPU will take 2 numbers at a time and sum them together
+the accumulation of the sum needs to be stored somewhere while the CPU grabs the next number
+the cumulative sum will be stored in the register
+registers make computations more efficient 
+registers avoid having to send data unnecessarily back + forth between RAM and CPU
+
+2.5 Gigahertz CPU processes 2.5 billion operations per second
+
+memory (RAM)
+"scratch paper"
+data gets temporarily stored before getting sent to CPU
+ephemeral storage
+
+it takes 250x longer to find and load a random byte from memory vs process that byte in CPU
+ex: in the time it takes to load an hours worth of random tweets in memory, a CPU could process over a week of tweets
+
+characterists of memory
+- efficiently loads data for CPU use
+- ephemeral 
+- expensive 
+
+rather than rely on an expensive super computer with lots of memory like everyone else in the late 90s
+Google took a different route
+leveraged long-term storage on cheap pre-used hardware
+distributed clusters = now industry standard
+
+storage (SSD)
+"filing cabinet"
+long-term data storage
+when a program runs, the CPU will direct the memory to temporarily load data from long term storage
+
+network
+access to the outside world
+moving data across the network is the most common bottleneck when working with big data
+
+ex: processing an hour of tweets (4.3 GB)
+if data is in memory = takes 30ms to process
+if data is in SSD and needs to be loaded into memory first = takes 0.5s to process
+if data needs to be pulled down from twitter API via internet = 30 seconds
+
+usually takes 20x longer to process data when you need to pull it down from another machine first
+distributed systems try to minimize shuffling data between nodes as much as possible
+
+key ratios
+fastest
+CPU = 200x faster vs loading data randomly from memory
+memory = 15x faster vs long term storage SDD
+SSD = 20x faster vs network
+
+##################
+what is big data?
+##################
+starting definition = cannot process the data on a single machine
+need a cluster of computers to process the data
+
+my machine has 32GB of RAM vs 1TB of SSD
+
+what happens when you try to run a script on a local machine using a data file that is larger than what your RAM can hold?
+the script will not work because
+- memory could not load data quickly from storage
+- CPU could not load data quickly from memory
+
+CPU directed SSD to load 8GB of data into RAM, leaving no other memory for other processes + OS
+CPU processed 8GB quickly + passed the 10GB results back to RAM > written to output file on SSD
+the next 8GB then loaded from SSD > RAM = 3000x slower to load data from SSD vs actual CPU processing
+the computer is spending most of its time moving data in and out of memory
+most CPU activity is from coordinating data IO > thrashing when system is overwhelmed by IO
+
+##############
+hadoop ecosystem
+##############
+distributed computing
+each node has its own CPU + memory 
+communicate with each other by passing messages
+
+parallel computing
+form of distributed computing
+the distinction is multiple CPUs have access to shared memory
+
+HDFS = data storage
+splits data into 64 or 128 MB chunks 
+stores chunks across a cluster of computers
+
+Hadoop MapReduce = programming model
+MAP
+each map step reads a partition from HDFS
+converts input into key, value pair (aka tuple)
+
+SHUFFLE
+shuffle the kv pairs across the cluster so all keys are on the same node
+
+REDUCE
+compute the final result
+values for a given key are combined
+
+YARN = resource manager 
+schedules jobs across the cluster
+keeps track of compute resources available 
+then assigns those available resources to specific tasks
+task = smallest unit of operation
+
+###########
+spark
+###########
+each node is responsible for a set of operations
+at the end we combine the partial results to get the final answer 
+master node = responsible for orchestrating tasks
+worker nodes = perform actual operations
+
+local mode
+everything happens on a single machine
+useful for prototyping
+
+spark shell 
+directly interact with driver program
+
+PySpark API allows you to write Python programs in Spark
+ensures that your code uses functional programming practices
+underneath the hood, the Python code uses py4j to make calls to the Java Virtual Machine (JVM)
+
+https://en.wikipedia.org/wiki/Java_virtual_machine
+JVM allows you to run Java programs
+also run programs written in other languages (ex: scala) that are compiled to Java bytecode
+interacting with JVM allows programmers to write Java and not worry about the underlying hardware the program is running on
+
+https://www.py4j.org/
+Py4J enables Python programs running in the Python interpreter to dynamically access Java objects in the Java virtual machine (JVM)
+methods are called as if the objects reside in the Python interpreter 
+Java collections can be accessed via standard Python collection methods
+
+Spark context = entry point to Spark API
+connects the cluster with the application
+access Spark context through SparkSession
+SparkSession = used to perform computations across the cluster
+
+Spark context method parallelize 
+takes Python object + distributes object across the cluster
+
+#######################
+functional programming
+#######################
+in math
+a function can only give you only give you one answer when you give it an input
+f(x) = x + 5
+f(3) = 3 + 5 = 8
+
+vs Python
+running the same code over and over again with the same input will output different results
+w = -1
+def f(x):
+	global w
+	w += 1
+	return x + w + 5
+
+when you have dozens of machines running code in parallel
+and sometimes you need to restart a calculation if there was a failure 
+these unintended side effects can lead to trouble
+
+your functions should not have side effects on variables outside their scope
+this could interfere with other functions running on your cluster
+
+whenever your functions run on some input data it cannot alter the input data in the process
+
+Spark DAG
+every Spark function makes a copy of its input data so it never changes the original parent data
+immutable = Spark does not change/mutate the input data 
+
+chain together multiple functions so each function takes care a small chunk of the work
+
+lazy evaluation
+before Spark does any work on the data, it builds step-by-step instructions
+
+ex: bread baking analogy
+look at the receipe before you start mixing the ingredients together  
+
+see what you need and grab all ingredients from the pantry at once
+vs going back and forth to the pantry to get what you need = equivalent of thrashing
+thrashing = compute gets overwhelmed from the process of transfering data from SSD to RAM
+
+generally combine all wet ingredients together first, then all dry ingredients
+these multi-step combos = stages in Spark
+in each stage, the worker node divides up the input data + runs the task for that stage
+
+########################
+Spark SQL approaches
+########################
+comes from math concept of mapping inputs to outputs
+apply a function to each value in the input
+common to use lambda functions
+
+df.map(lambda song : song.lower())
+
+why is it called a lambda function?
+https://palmstroem.blogspot.com/2012/05/lambda-calculus-for-absolute-dummies.html
+
+imperitive = how
+provide all the details on how to accomplish a task
+provide specific tranformations to apply to the data frame
+
+declarative = what = Spark SQL
+ex: spark.sql("SELECT * FROM TABLE");
+more concerned with what we want the result to be
+there is a layer of abstraction for the user 
+
+Why might you prefer to use SQL over data frames? Why might you prefer data frames over SQL?
+both Spark SQL and Spark Data Frames are part of the Spark SQL library
+both use the Spark SQL Catalyst Optimizer to optimize queries
+
+You might prefer SQL over data frames because the syntax is clearer especially for teams already experienced in SQL
+
+Spark data frames give you more control
+break down your queries into smaller steps, which can make debugging easier
+can also cache intermediate results or repartition intermediate results
+
+#####################
+RDDs vs DataFrames and Datasets
+https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html
+#####################
+RDD
+immutable distributed collection of data
+partitioned across nodes in the cluster
+can be operated on in parallel 
+
+When to use RDDs?
+you want low level control of transformations + actions performed on the data set
+data is unstructured (ex: streams of text)
+you don't care about imposing a schema 
+
+DataFrames
+immutable distributed collection of data
+untyped JVM objects
+data is organized into named columns, like a table in a relational database 
+
+DataSet
+collection of strongly typed JVM objects
+dictated by the class you define in Scala/Java
+not available in Python
+
+s3n:// protocol works faster
+https://stackoverflow.com/questions/33356041/technically-what-is-the-difference-between-s3n-s3a-and-s3
+
+https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=agg
