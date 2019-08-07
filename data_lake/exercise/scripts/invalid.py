@@ -19,15 +19,14 @@ if __name__ == "__main__":
 	incorrect_records = sc.accumulator(0)
 	correct_ts = udf(lambda x: 1 if isinstance(x, long) else add_incorrect_record())
 
-	df = logs.where(logs["_corrupt_record"].isNull()).withColumn("ts_digit", correct_ts(logs.ts))
+	df = logs.where(logs["_corrupt_record"].isNotNull()).withColumn("ts_digit", correct_ts(logs.ts))
 	# will get nothing because haven't called an action
 	print(incorrect_records.value)
-	# call action
 	df.collect()
 	# will get 2 records
 	print(incorrect_records.value)
 
-	# call action again
+	# call action again	
 	df.collect()
 	# will get 4 records
 	print(incorrect_records.value)
