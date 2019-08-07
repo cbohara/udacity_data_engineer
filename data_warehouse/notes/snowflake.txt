@@ -1,0 +1,132 @@
+The Snowflake Elastic Data Warehouse
+
+####
+Intro
+####
+no longer on-prem
+cloud = shared data centers
+increase economies of scale = cost advantages reaped when no longer having to manager your own local servers
+extreme scalability + availability 
+past-as-you-go cost model adapts to unpredictable usage
+
+the advantages of the cloud can only be capture if the software itself is able to scale elastically over the pool of commodity resources that is the cloud 
+
+no longer dealing with data that arrives in a predictable rate + structure
+as a response, data warehouse community is turning to "Big Data" platforms such as Hadoop + Spark
+however they lack the efficiency + feature set (set of functions) that data warehouse provide
+and they require significant engineering effort to roll out + use
+
+Snowflake is not based on Hadoop, Postgres, or the like
+the processing engine has been built from scratch
+
+####
+key features of snowflake
+####
+1. pure SaaS experience
+users need not buy machines, hire DBAs, or install software
+easy to use
+no tuning knobs, no physical design, no storage grooming tasks 
+
+2. relational
+comprehensive support for ANSI SQL + ACID transactions
+
+3. semi-structured
+built-in functions + SQL extensions for traversing, flattening, and nesting semi-structured data
+support for JSON and Avro
+automatic schema discovery + columnar storage makes operations on schema-less semi-structured data nearly as fast as over plain relational data without any use effort
+
+4. elastic
+storage + compute resources can be scaled independently and seamlessly
+without impact on data availability or performance of concurrent queries
+
+5. highly available
+Snowflake tolerate node, cluster + even full data center failures
+there is no downtime during software/harware upgrades
+
+6. durable
+Snowflake is designed for extreme durability with extra safeguards against accidental data loss
+cloning, undrop, and cross-region backups
+
+7. cost-effective
+highly compute efficient 
+all table data is compressed
+users pay only for what storage + compute resources they actually use
+
+8. secure
+all data is encrypted end-to-end
+no user data is ever exposed to the cloud platform
+role-based access control gives users the ability to exercise fine-grained access control on the SQL level
+
+#########
+storage vs compute
+#########
+shared-nothing architecture = every query processor node has its own local disks
+tables are horizontally partitioned across nodes 
+each node is only responsible for the rows on its local disks
+
+design scales well with star-schema queries
+very little bandwidth is required to join small dimension table with large partitioned fact table
+
+disadvantages of pure shared-nothing architecture
+1. tighly couples compute + storage resources
+2. heterogenous workload 
+while the hardware is homogenous, the workload typically is not
+system configurations that are ideal for bulk loading (high I/O bandwith, light compute) is a poor fit for complex queries (low I/O bandwidth, heavy compute)
+3. membership changes
+if a set of nodes change (either bc node failures or user chooses to resize the system) large amounts of data need to be reshuffled
+since the very same nodes are responsible for both data shuffling and query processing > significant performance impact can be observed
+limits elasticity + availability
+4. online upgrade
+software + hardware upgrades eventually affect every node in the system
+implementing online upgrades one node at a time is possible in principle but difficult in practice
+
+in the cloud, memebership changes are the norm bc node failure is frequent
+online upgrades are ideal to dramatically shorten the software development cycle + increase availability
+elastic scaling further increases availability + allows users to match resource consumption to their momentary needs
+
+for these reasons Snowflake separates storage + compute
+compute is provided via Snowflake proprietary shared-nothing engine
+Storage on A3
+to reduce network traffic between compute nodes and storage nodes, each compute node caches some table data on local disk
+local disk is used exclusively for temporary data and caching
+
+##########
+architecture
+##########
+
+############
+cost + query optimization considerations
+############
+whenever you do inserts into Snowflake = really creating s3 files with some metadata
+record in its internal foundation database about where the data is within the micropartitions
+the goal is to minimize the number of micropartitions scanned
+
+take a look at pruning
+partitions scanned should be small vs partitions total
+
+watch out for 
+bytes spilled to local storage
+https://community.snowflake.com/s/article/Recognizing-Disk-Spilling
+
+the amount of data you had to scan over to complete your query could not fit into the RAM of the worker node
+this is death to query performance
+save money by moving up to a larger warehouse
+
+what are ways you can limit the amount of data you have to scan over?
+scan over less data > ideally have to process less data without spilling bytes
+
+when inserting order by a specific column
+some queries took longer but it was cheaper on the whole to not use clustering
+keep in mind if clustering is cost effective
+when you are not clustering = ordering inserts = poor mans clustering
+
+sometimes when a query runs consistently but occassionally takes 10x longer
+how to deal? sometimes it's better to use temporary tables vs WITH CTEs
+that can help keep the snowflake query planner from getting confused
+
+have a snapshot of what's going on in production available the next day in development + staging
+clone schema is nice and cheap bc both copies of data are pointing to the same s3 files
+
+how much cost is compute vs storage?
+go to databases and check how much storage is in each table
+see if there is temporary data you can clean up
