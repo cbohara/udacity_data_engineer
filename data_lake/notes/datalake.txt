@@ -76,9 +76,11 @@ all spark data exposed in a single abstraction = data frame
 data lake concepts
 ##########
 all types of data welcome = high/low value, un- semi- structured
+
 ELT not ETL
 data is stored as is in its original format
 transforms are done later when processing the data 
+
 data is processed with schema-on-read 
 no predefined star schema is there before transformation
 massive parallelism + scalability come out of the box with all big data processing tools
