@@ -259,10 +259,9 @@ spark macos install
 ##################
 used homebrew
 https://www.freecodecamp.org/news/installing-scala-and-apache-spark-on-mac-os-837ae57d283f/
-https://medium.com/@purmac/using-standalone-spark-with-amazon-s3-1ff72f2cf843
-
-allow access to AWS
+https://medium.com/@purmac/using-standalone-spark-with-amazon-s3-1ff72f2cf843 
 https://vinta.ws/code/setup-spark-on-macos.html
+
 update config file 
 /usr/local/Cellar/apache-spark/2.4.3/libexec/conf/spark-defaults.conf
 
