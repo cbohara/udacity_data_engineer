@@ -1,0 +1,10 @@
+Apache Airflow
+https://airflow.apache.org/
+write DAG in python to run on a schedule and/or from external triggers
+comes with web-based UI and command line utilities 
+
+programmatically author, schedule, and monitor workflows 
+author workflows as DAG of tasks
+the airflow scheduler executes your tasks on an array of workers while following the specified dependencies
+when workflows are defined as code, they become more maintainable, versionable, testable, and collaborative 
+
