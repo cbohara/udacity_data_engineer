@@ -1,5 +1,6 @@
 Apache Airflow
 https://airflow.apache.org/
+defines data pipelines
 write DAG in python to run on a schedule and/or from external triggers
 comes with web-based UI and command line utilities 
 
@@ -7,4 +8,38 @@ programmatically author, schedule, and monitor workflows
 author workflows as DAG of tasks
 the airflow scheduler executes your tasks on an array of workers while following the specified dependencies
 when workflows are defined as code, they become more maintainable, versionable, testable, and collaborative 
+
+5 runtime components
+1. scheduler
+responsible for tracking progress of DAGs and their tasks
+orchestrates execution of jobs on a trigger or schedule
+can use '@daily' or cron 
+if you don't schedule the default is 1x per day
+if you don't set an end date it will continue to run
+2. work queue
+holds the state of running DAGs and tasks
+3. worker processes
+actually execute the individual processes of the DAG
+4. database
+stores credentials, connections, history, and configuration aka metadata
+don't store actual data related to the processes in this DB
+airflow components interact with the DB using SQLAlchemy
+5. web server
+provides UI dashboard for users and maintainers 
+built using Flask
+
+airflow itself is not a data processing framework like Spark or Hadoop
+in airflow you don't pass data in memory between steps in your DAG
+use airflow to coordinate the movement of data between other data storage + processing tools
+
+find tasks that have no dependencies so execute them first
+place tasks in the queue for workers to pick up the tasks + execute
+after completion the status is recorded by the scheduler 
+the scheduler will only place work in the queue if all the jobs dependencies have been met
+
+operators 
+building blocks of DAG
+atomic steps of DAG
+parameterized + instantiated operator = task
+airflow comes with a lot of useful operators 
 
