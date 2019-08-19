@@ -43,3 +43,16 @@ atomic steps of DAG
 parameterized + instantiated operator = task
 airflow comes with a lot of useful operators 
 
+managing connections
+can manage connections and configurations in DAG UI
+connections can be accessed in code via hooks
+
+admin
+connections
+create
+conn id aws_credentials
+conn type amazon web services
+login aws key
+password aws secret key
+
+templating

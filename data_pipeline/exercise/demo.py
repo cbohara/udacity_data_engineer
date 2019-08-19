@@ -19,6 +19,10 @@ def cwd():
 def goodbye():
 	logging.info("Goodbye")
 
+def log_details(*args, **kwargs):
+	"""Context variables listed at https://airflow.apache.org/macros.html"""
+	logging.info(f"Date: {kwargs['ds']}")
+
 # minimum definition requires name and start date
 dag = DAG(
 	'lesson1.demo1',
@@ -58,6 +62,14 @@ goodbye_task = PythonOperator(
 	task_id="goodbye_task",
 	python_callable=goodbye,
 	dag=dag
+)
+
+log_details_task = PythonOperator(
+	task_id="log_details",
+	python_callable=log_details,
+	dag=dag,
+	# allows you to access keyword variables about the context of the job
+	provide_context=True
 )
 
 # use >> to communicate the order of tasks
