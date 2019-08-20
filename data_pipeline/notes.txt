@@ -1,6 +1,7 @@
 Apache Airflow
 https://airflow.apache.org/
 defines data pipelines
+DAG = a collection of nodes and edges that describe the order of operations for a data pipeline
 write DAG in python to run on a schedule and/or from external triggers
 comes with web-based UI and command line utilities 
 
@@ -37,15 +38,14 @@ place tasks in the queue for workers to pick up the tasks + execute
 after completion the status is recorded by the scheduler 
 the scheduler will only place work in the queue if all the jobs dependencies have been met
 
-operators 
-building blocks of DAG
-atomic steps of DAG
-parameterized + instantiated operator = task
-airflow comes with a lot of useful operators 
+airflow comes with a lot of useful operators like S3toRedshift
+operators = abstract building block that can be configured to perform some work
+task = instantiated in a pipeline fully parameterized for execution
 
 managing connections
 can manage connections and configurations in DAG UI
 connections can be accessed in code via hooks
+hook = reusable connection to an external database or system
 
 admin
 connections
@@ -55,4 +55,9 @@ conn type amazon web services
 login aws key
 password aws secret key
 
-templating
+context variables
+https://airflow.apache.org/macros.html
+https://blog.godatadriven.com/zen-of-python-and-apache-airflow
+
+execution date is helpful for backfilling because you can record the date you intended the code to run
+not necessarily the current date or the time of execution
