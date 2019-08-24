@@ -1,3 +1,6 @@
+#############
+data pipelines
+#############
 Apache Airflow
 https://airflow.apache.org/
 defines data pipelines
@@ -61,3 +64,62 @@ https://blog.godatadriven.com/zen-of-python-and-apache-airflow
 
 execution date is helpful for backfilling because you can record the date you intended the code to run
 not necessarily the current date or the time of execution
+
+##############
+data quality
+##############
+
+data lineage
+access to + understands where data originates and how it is calculated
+allows for trust of how those numbers are calculated
+need to agree upon across the business
+
+makes it easier to track down the root of errors when you clearly understand the data pipeline
+
+airflow UI makes it easy to identify data lineage
+circle = data pipeline run is complete
+square = specific task is complete
+
+airflow also shows rendered code for each task under "Rendered Template"
+keep in mind it will display the latest code, not necessarily the code used to accomplish a historical run
+if you are making drastic changes to a data pipeline it may be worth starting fresh vs updating existing
+
+single visual point of reference for all members of the team
+
+schedules
+when a data pipeline is designed with a schedule in mind, use execution time to determine the scope of the data processed
+
+scope is based on
+size of data = large data sets need to be processed more often
+note - even if data size is not large, dealing with a lot of small files requires a lot of processing overhead
+frequency of data = how often is it delivered? 
+related dataset = what other datasets are you using in the analysis?
+
+better to create a new DAG vs update an existing one
+avoids confusion on the reality of historical executions
+you can clear history, but be aware the pipeline itself will rerun
+
+smaller datasets, smaller time periods, and related concepts are easier to debug than big datasets, large time periods, and unrelated concepts
+partitioning makes debugging and rerunning failed tasks much simpler
+it also enables easier redos of work, reducing cost and time
+
+need to set requirements with downstream consumers in order to establish quality
+
+examples of requirements
+- data must be a certain size
+ex: if there are no rows in the table, clearly the load failed
+also can check within certain limits
+
+- data is accurate to some margin of error
+ex: check the number of events sit within expected boundaries
+if the avg for a certain event is significantly greater than the max value, something is up
+
+- data must arrive within a given timeframe from the start of execution
+ex: spending a lot of money on advertising 
+if you are using data that is out of date, this will be ineffective > bad outcomes for the business
+
+- pipeline must run on a particular schedule
+airflow = easily measure + track how long tasks take
+
+- data must not contain sensitive info
+ex: add checks with data pipelines that ensure columns with sensitive data are no longer present
