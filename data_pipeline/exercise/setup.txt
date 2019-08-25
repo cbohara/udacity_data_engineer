@@ -1,0 +1,14 @@
+set variables by uploading variables.json
+
+connections
+AWS
+Set "Conn Id" to "aws_credentials", "Conn Type" to "Amazon Web Services"
+Set "Login" to your aws_access_key_id and "Password" to your aws_secret_key
+
+Redshift
+conn id = redshift
+conn type = postgres
+host = cluster endpoint
+schema = database name
+login = user
+port = 5439

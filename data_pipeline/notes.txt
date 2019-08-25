@@ -123,3 +123,40 @@ airflow = easily measure + track how long tasks take
 
 - data must not contain sensitive info
 ex: add checks with data pipelines that ensure columns with sensitive data are no longer present
+
+###################
+production pipelines
+###################
+custom operators = transform frequently used operations into a reusable form
+avoid duplicating work
+
+check what is available first 
+https://github.com/apache/airflow/tree/master/airflow/contrib
+https://github.com/apache/airflow/tree/master/airflow/contrib/operators
+
+task boundaries
+tasks should have a well defined purpose
+the more work a task performs, the less clear its purpose becomes
+minimize dependencies = maximize parallelization
+makes it easier to ID which task failed
+
+subDAG
+advantages
+repeatable series of steps
+always used as a piece of another DAG
+do not stand on their own
+
+Commonly repeated series of tasks within DAGs can be captured as reusable SubDAGs. Benefits include:
+Decrease the amount of code we need to write and maintain to create a new DAG
+Easier to understand the high level goals of a DAG
+Bug fixes, speedups, and other enhancements can be made more quickly and distributed to all DAGs that use that SubDAG
+
+downside
+limits visibility in UI
+abstraction = less clear what the entire DAG is performing
+encourages premature optimization
+
+monitoring
+SLA misses
+send notifications > pager duty
+comes with Statsd and grafana
