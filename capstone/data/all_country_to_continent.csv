@@ -1,0 +1,263 @@
+continent_name,continent_code,country_name,two_letter_country_code,three_letter_country_code,country_number
+asia,as,afghanistan, islamic republic of,af,afg,4
+europe,eu,albania, republic of,al,alb,8
+antarctica,an,antarctica (the territory south of 60 deg s),aq,ata,10
+africa,af,algeria, people's democratic republic of,dz,dza,12
+oceania,oc,american samoa,as,asm,16
+europe,eu,andorra, principality of,ad,and,20
+africa,af,angola, republic of,ao,ago,24
+north america,na,antigua and barbuda,ag,atg,28
+europe,eu,azerbaijan, republic of,az,aze,31
+asia,as,azerbaijan, republic of,az,aze,31
+south america,sa,argentina, argentine republic,ar,arg,32
+oceania,oc,australia, commonwealth of,au,aus,36
+europe,eu,austria, republic of,at,aut,40
+north america,na,bahamas, commonwealth of the,bs,bhs,44
+asia,as,bahrain, kingdom of,bh,bhr,48
+asia,as,bangladesh, people's republic of,bd,bgd,50
+europe,eu,armenia, republic of,am,arm,51
+asia,as,armenia, republic of,am,arm,51
+north america,na,barbados,bb,brb,52
+europe,eu,belgium, kingdom of,be,bel,56
+north america,na,bermuda,bm,bmu,60
+asia,as,bhutan, kingdom of,bt,btn,64
+south america,sa,bolivia, republic of,bo,bol,68
+europe,eu,bosnia and herzegovina,ba,bih,70
+africa,af,botswana, republic of,bw,bwa,72
+antarctica,an,bouvet island (bouvetoya),bv,bvt,74
+south america,sa,brazil, federative republic of,br,bra,76
+north america,na,belize,bz,blz,84
+asia,as,british indian ocean territory (chagos archipelago),io,iot,86
+oceania,oc,solomon islands,sb,slb,90
+north america,na,british virgin islands,vg,vgb,92
+asia,as,brunei darussalam,bn,brn,96
+europe,eu,bulgaria, republic of,bg,bgr,100
+asia,as,myanmar, union of,mm,mmr,104
+africa,af,burundi, republic of,bi,bdi,108
+europe,eu,belarus, republic of,by,blr,112
+asia,as,cambodia, kingdom of,kh,khm,116
+africa,af,cameroon, republic of,cm,cmr,120
+north america,na,canada,ca,can,124
+africa,af,cape verde, republic of,cv,cpv,132
+north america,na,cayman islands,ky,cym,136
+africa,af,central african republic,cf,caf,140
+asia,as,sri lanka, democratic socialist republic of,lk,lka,144
+africa,af,chad, republic of,td,tcd,148
+south america,sa,chile, republic of,cl,chl,152
+asia,as,china, people's republic of,cn,chn,156
+asia,as,taiwan,tw,twn,158
+asia,as,christmas island,cx,cxr,162
+asia,as,cocos (keeling) islands,cc,cck,166
+south america,sa,colombia, republic of,co,col,170
+africa,af,comoros, union of the,km,com,174
+africa,af,mayotte,yt,myt,175
+africa,af,congo, republic of the,cg,cog,178
+africa,af,congo, democratic republic of the,cd,cod,180
+oceania,oc,cook islands,ck,cok,184
+north america,na,costa rica, republic of,cr,cri,188
+europe,eu,croatia, republic of,hr,hrv,191
+north america,na,cuba, republic of,cu,cub,192
+europe,eu,cyprus, republic of,cy,cyp,196
+asia,as,cyprus, republic of,cy,cyp,196
+europe,eu,czech republic,cz,cze,203
+africa,af,benin, republic of,bj,ben,204
+europe,eu,denmark, kingdom of,dk,dnk,208
+north america,na,dominica, commonwealth of,dm,dma,212
+north america,na,dominican republic,do,dom,214
+south america,sa,ecuador, republic of,ec,ecu,218
+north america,na,el salvador, republic of,sv,slv,222
+africa,af,equatorial guinea, republic of,gq,gnq,226
+africa,af,ethiopia, federal democratic republic of,et,eth,231
+africa,af,eritrea, state of,er,eri,232
+europe,eu,estonia, republic of,ee,est,233
+europe,eu,faroe islands,fo,fro,234
+south america,sa,falkland islands (malvinas),fk,flk,238
+antarctica,an,south georgia and the south sandwich islands,gs,sgs,239
+oceania,oc,fiji, republic of the fiji islands,fj,fji,242
+europe,eu,finland, republic of,fi,fin,246
+europe,eu,åland islands,ax,ala,248
+europe,eu,france, french republic,fr,fra,250
+south america,sa,french guiana,gf,guf,254
+oceania,oc,french polynesia,pf,pyf,258
+antarctica,an,french southern territories,tf,atf,260
+africa,af,djibouti, republic of,dj,dji,262
+africa,af,gabon, gabonese republic,ga,gab,266
+europe,eu,georgia,ge,geo,268
+asia,as,georgia,ge,geo,268
+africa,af,gambia, republic of the,gm,gmb,270
+asia,as,palestinian territory, occupied,ps,pse,275
+europe,eu,germany, federal republic of,de,deu,276
+africa,af,ghana, republic of,gh,gha,288
+europe,eu,gibraltar,gi,gib,292
+oceania,oc,kiribati, republic of,ki,kir,296
+europe,eu,greece, hellenic republic,gr,grc,300
+north america,na,greenland,gl,grl,304
+north america,na,grenada,gd,grd,308
+north america,na,guadeloupe,gp,glp,312
+oceania,oc,guam,gu,gum,316
+north america,na,guatemala, republic of,gt,gtm,320
+africa,af,guinea, republic of,gn,gin,324
+south america,sa,guyana, co-operative republic of,gy,guy,328
+north america,na,haiti, republic of,ht,hti,332
+antarctica,an,heard island and mcdonald islands,hm,hmd,334
+europe,eu,holy see (vatican city state),va,vat,336
+north america,na,honduras, republic of,hn,hnd,340
+asia,as,hong kong, special administrative region of china,hk,hkg,344
+europe,eu,hungary, republic of,hu,hun,348
+europe,eu,iceland, republic of,is,isl,352
+asia,as,india, republic of,in,ind,356
+asia,as,indonesia, republic of,id,idn,360
+asia,as,iran, islamic republic of,ir,irn,364
+asia,as,iraq, republic of,iq,irq,368
+europe,eu,ireland,ie,irl,372
+asia,as,israel, state of,il,isr,376
+europe,eu,italy, italian republic,it,ita,380
+africa,af,cote d'ivoire, republic of,ci,civ,384
+north america,na,jamaica,jm,jam,388
+asia,as,japan,jp,jpn,392
+europe,eu,kazakhstan, republic of,kz,kaz,398
+asia,as,kazakhstan, republic of,kz,kaz,398
+asia,as,jordan, hashemite kingdom of,jo,jor,400
+africa,af,kenya, republic of,ke,ken,404
+asia,as,korea, democratic people's republic of,kp,prk,408
+asia,as,korea, republic of,kr,kor,410
+asia,as,kuwait, state of,kw,kwt,414
+asia,as,kyrgyz republic,kg,kgz,417
+asia,as,lao people's democratic republic,la,lao,418
+asia,as,lebanon, lebanese republic,lb,lbn,422
+africa,af,lesotho, kingdom of,ls,lso,426
+europe,eu,latvia, republic of,lv,lva,428
+africa,af,liberia, republic of,lr,lbr,430
+africa,af,libyan arab jamahiriya,ly,lby,434
+europe,eu,liechtenstein, principality of,li,lie,438
+europe,eu,lithuania, republic of,lt,ltu,440
+europe,eu,luxembourg, grand duchy of,lu,lux,442
+asia,as,macao, special administrative region of china,mo,mac,446
+africa,af,madagascar, republic of,mg,mdg,450
+africa,af,malawi, republic of,mw,mwi,454
+asia,as,malaysia,my,mys,458
+asia,as,maldives, republic of,mv,mdv,462
+africa,af,mali, republic of,ml,mli,466
+europe,eu,malta, republic of,mt,mlt,470
+north america,na,martinique,mq,mtq,474
+africa,af,mauritania, islamic republic of,mr,mrt,478
+africa,af,mauritius, republic of,mu,mus,480
+north america,na,mexico, united mexican states,mx,mex,484
+europe,eu,monaco, principality of,mc,mco,492
+asia,as,mongolia,mn,mng,496
+europe,eu,moldova, republic of,md,mda,498
+europe,eu,montenegro, republic of,me,mne,499
+north america,na,montserrat,ms,msr,500
+africa,af,morocco, kingdom of,ma,mar,504
+africa,af,mozambique, republic of,mz,moz,508
+asia,as,oman, sultanate of,om,omn,512
+africa,af,namibia, republic of,na,nam,516
+oceania,oc,nauru, republic of,nr,nru,520
+asia,as,nepal, state of,np,npl,524
+europe,eu,netherlands, kingdom of the,nl,nld,528
+north america,na,netherlands antilles,an,ant,530
+north america,na,curaçao,cw,cuw,531
+north america,na,aruba,aw,abw,533
+north america,na,sint maarten (netherlands),sx,sxm,534
+north america,na,bonaire, sint eustatius and saba,bq,bes,535
+oceania,oc,new caledonia,nc,ncl,540
+oceania,oc,vanuatu, republic of,vu,vut,548
+oceania,oc,new zealand,nz,nzl,554
+north america,na,nicaragua, republic of,ni,nic,558
+africa,af,niger, republic of,ne,ner,562
+africa,af,nigeria, federal republic of,ng,nga,566
+oceania,oc,niue,nu,niu,570
+oceania,oc,norfolk island,nf,nfk,574
+europe,eu,norway, kingdom of,no,nor,578
+oceania,oc,northern mariana islands, commonwealth of the,mp,mnp,580
+oceania,oc,united states minor outlying islands,um,umi,581
+north america,na,united states minor outlying islands,um,umi,581
+oceania,oc,micronesia, federated states of,fm,fsm,583
+oceania,oc,marshall islands, republic of the,mh,mhl,584
+oceania,oc,palau, republic of,pw,plw,585
+asia,as,pakistan, islamic republic of,pk,pak,586
+north america,na,panama, republic of,pa,pan,591
+oceania,oc,papua new guinea, independent state of,pg,png,598
+south america,sa,paraguay, republic of,py,pry,600
+south america,sa,peru, republic of,pe,per,604
+asia,as,philippines, republic of the,ph,phl,608
+oceania,oc,pitcairn islands,pn,pcn,612
+europe,eu,poland, republic of,pl,pol,616
+europe,eu,portugal, portuguese republic,pt,prt,620
+africa,af,guinea-bissau, republic of,gw,gnb,624
+asia,as,timor-leste, democratic republic of,tl,tls,626
+north america,na,puerto rico, commonwealth of,pr,pri,630
+asia,as,qatar, state of,qa,qat,634
+africa,af,reunion,re,reu,638
+europe,eu,romania,ro,rou,642
+europe,eu,russian federation,ru,rus,643
+asia,as,russian federation,ru,rus,643
+africa,af,rwanda, republic of,rw,rwa,646
+north america,na,saint barthelemy,bl,blm,652
+africa,af,saint helena,sh,shn,654
+north america,na,saint kitts and nevis, federation of,kn,kna,659
+north america,na,anguilla,ai,aia,660
+north america,na,saint lucia,lc,lca,662
+north america,na,saint martin,mf,maf,663
+north america,na,saint pierre and miquelon,pm,spm,666
+north america,na,saint vincent and the grenadines,vc,vct,670
+europe,eu,san marino, republic of,sm,smr,674
+africa,af,sao tome and principe, democratic republic of,st,stp,678
+asia,as,saudi arabia, kingdom of,sa,sau,682
+africa,af,senegal, republic of,sn,sen,686
+europe,eu,serbia, republic of,rs,srb,688
+africa,af,seychelles, republic of,sc,syc,690
+africa,af,sierra leone, republic of,sl,sle,694
+asia,as,singapore, republic of,sg,sgp,702
+europe,eu,slovakia (slovak republic),sk,svk,703
+asia,as,vietnam, socialist republic of,vn,vnm,704
+europe,eu,slovenia, republic of,si,svn,705
+africa,af,somalia, somali republic,so,som,706
+africa,af,south africa, republic of,za,zaf,710
+africa,af,zimbabwe, republic of,zw,zwe,716
+europe,eu,spain, kingdom of,es,esp,724
+africa,af,south sudan,ss,ssd,728
+africa,af,western sahara,eh,esh,732
+africa,af,sudan, republic of,sd,sdn,736
+south america,sa,suriname, republic of,sr,sur,740
+europe,eu,svalbard & jan mayen islands,sj,sjm,744
+africa,af,swaziland, kingdom of,sz,swz,748
+europe,eu,sweden, kingdom of,se,swe,752
+europe,eu,switzerland, swiss confederation,ch,che,756
+asia,as,syrian arab republic,sy,syr,760
+asia,as,tajikistan, republic of,tj,tjk,762
+asia,as,thailand, kingdom of,th,tha,764
+africa,af,togo, togolese republic,tg,tgo,768
+oceania,oc,tokelau,tk,tkl,772
+oceania,oc,tonga, kingdom of,to,ton,776
+north america,na,trinidad and tobago, republic of,tt,tto,780
+asia,as,united arab emirates,ae,are,784
+africa,af,tunisia, tunisian republic,tn,tun,788
+europe,eu,turkey, republic of,tr,tur,792
+asia,as,turkey, republic of,tr,tur,792
+asia,as,turkmenistan,tm,tkm,795
+north america,na,turks and caicos islands,tc,tca,796
+oceania,oc,tuvalu,tv,tuv,798
+africa,af,uganda, republic of,ug,uga,800
+europe,eu,ukraine,ua,ukr,804
+europe,eu,macedonia, the former yugoslav republic of,mk,mkd,807
+africa,af,egypt, arab republic of,eg,egy,818
+europe,eu,united kingdom of great britain & northern ireland,gb,gbr,826
+europe,eu,guernsey, bailiwick of,gg,ggy,831
+europe,eu,jersey, bailiwick of,je,jey,832
+europe,eu,isle of man,im,imn,833
+africa,af,tanzania, united republic of,tz,tza,834
+north america,na,united states of america,us,usa,840
+north america,na,united states virgin islands,vi,vir,850
+africa,af,burkina faso,bf,bfa,854
+south america,sa,uruguay, eastern republic of,uy,ury,858
+asia,as,uzbekistan, republic of,uz,uzb,860
+south america,sa,venezuela, bolivarian republic of,ve,ven,862
+oceania,oc,wallis and futuna,wf,wlf,876
+oceania,oc,samoa, independent state of,ws,wsm,882
+asia,as,yemen,ye,yem,887
+africa,af,zambia, republic of,zm,zmb,894
+oceania,oc,disputed territory,xx,,
+asia,as,iraq-saudi arabia neutral zone,xe,,
+asia,as,united nations neutral zone,xd,,
+asia,as,spratly islands,xs,,

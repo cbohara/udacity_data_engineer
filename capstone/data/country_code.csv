@@ -1,0 +1,258 @@
+country_id,country
+582,mexico
+236,afghanistan
+101,albania
+316,algeria
+102,andorra
+324,angola
+529,anguilla
+518,antigua-barbuda
+687,argentina 
+151,armenia
+532,aruba
+438,australia
+103,austria
+152,azerbaijan
+512,bahamas
+298,bahrain
+274,bangladesh
+513,barbados
+104,belgium
+581,belize
+386,benin
+509,bermuda
+153,belarus
+242,bhutan
+688,bolivia
+717,bonaire, st eustatius, saba 
+164,bosnia-herzegovina
+336,botswana
+689,brazil
+525,british virgin islands
+217,brunei
+105,bulgaria
+393,burkina faso
+243,burma
+375,burundi
+310,cameroon
+326,cape verde
+526,cayman islands
+383,central african republic
+384,chad
+690,chile
+245,china, prc
+721,curacao 
+270,christmas island
+271,cocos islands
+691,colombia
+317,comoros
+385,congo
+467,cook islands
+575,costa rica
+165,croatia
+584,cuba
+218,cyprus
+140,czech republic
+723,faroe islands (part of denmark)  
+108,denmark
+322,djibouti
+519,dominica
+585,dominican republic
+240,east timor
+692,ecuador
+368,egypt
+576,el salvador
+399,equatorial guinea
+372,eritrea
+109,estonia
+369,ethiopia
+604,falkland islands
+413,fiji
+110,finland
+111,france
+601,french guiana
+411,french polynesia
+387,gabon
+338,gambia
+758,gaza strip 
+154,georgia
+112,germany
+339,ghana
+143,gibraltar
+113,greece
+520,grenada
+507,guadeloupe
+577,guatemala
+382,guinea
+327,guinea-bissau
+603,guyana
+586,haiti
+726,heard and mcdonald is.
+149,holy see/vatican
+528,honduras
+206,hong kong
+114,hungary
+115,iceland
+213,india
+759,indian ocean areas (french) 
+729,indian ocean territory 
+204,indonesia
+249,iran
+250,iraq
+116,ireland
+251,israel
+117,italy
+388,ivory coast
+514,jamaica
+209,japan
+253,jordan
+201,kampuchea
+155,kazakhstan
+340,kenya
+414,kiribati
+732,kosovo 
+272,kuwait
+156,kyrgyzstan
+203,laos
+118,latvia
+255,lebanon
+335,lesotho
+370,liberia
+381,libya
+119,liechtenstein
+120,lithuania
+121,luxembourg
+214,macau
+167,macedonia
+320,madagascar
+345,malawi
+273,malaysia
+220,maldives
+392,mali
+145,malta
+472,marshall islands
+511,martinique
+389,mauritania
+342,mauritius
+760,mayotte (africa - french) 
+473,micronesia, fed. states of
+157,moldova
+122,monaco
+299,mongolia
+735,montenegro 
+521,montserrat
+332,morocco
+329,mozambique
+371,namibia
+440,nauru
+257,nepal
+123,netherlands
+508,netherlands antilles
+409,new caledonia
+464,new zealand
+579,nicaragua
+390,niger
+343,nigeria
+470,niue
+275,north korea
+124,norway
+256,oman
+258,pakistan
+474,palau
+743,palestine 
+504,panama
+441,papua new guinea
+693,paraguay
+694,peru
+260,philippines
+416,pitcairn islands
+107,poland
+126,portugal
+297,qatar
+748,republic of south sudan
+321,reunion
+127,romania
+158,russia
+376,rwanda
+128,san marino
+330,sao tome and principe
+261,saudi arabia
+391,senegal
+142,serbia and montenegro
+745,serbia 
+347,seychelles
+348,sierra leone
+207,singapore
+141,slovakia
+166,slovenia
+412,solomon islands
+397,somalia
+373,south africa
+276,south korea
+129,spain
+244,sri lanka
+346,st. helena
+522,st. kitts-nevis
+523,st. lucia
+502,st. pierre and miquelon
+524,st. vincent-grenadines
+716,saint barthelemy 
+736,saint martin 
+749,saint maarten 
+350,sudan
+602,suriname
+351,swaziland
+130,sweden
+131,switzerland
+262,syria
+268,taiwan
+159,tajikistan
+353,tanzania
+263,thailand
+304,togo
+417,tonga
+516,trinidad and tobago
+323,tunisia
+264,turkey
+161,turkmenistan
+527,turks and caicos islands
+420,tuvalu
+352,uganda
+162,ukraine
+296,united arab emirates
+135,united kingdom
+695,uruguay
+163,uzbekistan
+410,vanuatu
+696,venezuela
+266,vietnam
+469,wallis and futuna islands
+757,west indies (french) 
+333,western sahara
+465,western samoa
+216,yemen
+139,yugoslavia
+301,zaire
+344,zambia
+315,zimbabwe
+403,american samoa
+712,antarctica 
+700,born on board ship
+719,bouvet island (antarctica/norway terr.)
+574,canada
+720,canton and enderbury isls 
+106,czechoslovakia
+739,dronning maud land (antarctica-norway) 
+394,french southern and antarctic
+501,greenland
+404,guam
+730,international waters 
+731,johnson island 
+471,mariana islands, northern
+737,midway islands 
+753,minor outlying islands - usa
+740,neutral zone (s. arabia/iraq) 
+710,non-quota immigrant
+505,puerto rico
+506,u.s. virgin islands
+755,wake island  
